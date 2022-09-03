@@ -2,14 +2,17 @@ import { createApp, h } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import './style.css'
 import App from './App.vue'
+import Store, { store } from './store'
 
-import Dashboard from './pages/Dashboard.vue'
-import Login from './pages/Auth/Login.vue'
+import Dashboard from './Pages/Dashboard.vue'
+import Login from './Pages/Auth/Login.vue'
+import Register from './Pages/Auth/Register.vue'
 
 const route = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/login', component: Login },
+    { path: '/register', component: Register },
     { path: '/', component: Dashboard },
   ],
 })
@@ -25,5 +28,6 @@ const app = createApp({
       url,
     },
   })
+  .use(store)
   .use(route)
   .mount('#app')

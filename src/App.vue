@@ -1,17 +1,14 @@
 <script setup>
 import axios from 'axios';
-import { onMounted, Teleport, watch, ref, nextTick } from 'vue';
+import { onMounted, Teleport, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import AuthLayout from './layouts/AuthLayout.vue'
-import DashboardLayout from './layouts/DashboardLayout.vue';
 
 const router = useRouter()
-const Layout = ref(null)
+const ready = ref(false)
 
 onMounted(async () => {
   await router.isReady()
-  const current = router.currentRoute.value
-  Layout.value = ['login', 'register'].includes(current.path.replace(/^\//g, '')) ? AuthLayout : DashboardLayout
+  ready.value = true
 })
 </script>
 
@@ -21,8 +18,18 @@ onMounted(async () => {
       <link rel="stylesheet" href="/vendors/css/icons.css">
     </Teleport>
 
-    <Layout v-if="Layout">
-      <RouterView :user="user" :router="router" />
-    </Layout>
+    <TransitionGroup name="opacity">
+      <RouterView v-if="ready" :user="user" :router="router" />
+    </TransitionGroup>
   </div>
 </template>
+
+<style scoped>
+.opacity-enter-active, .opacity-leave-active {
+  transition: all 300ms ease-in-out;
+}
+
+.opacity-enter-from, .opacity-leave-to {
+  opacity: 0;
+}
+</style>
