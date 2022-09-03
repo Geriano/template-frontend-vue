@@ -1,31 +1,28 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import { onMounted, Teleport, watch, ref, nextTick } from 'vue';
+import { useRouter } from 'vue-router';
+import AuthLayout from './layouts/AuthLayout.vue'
+import DashboardLayout from './layouts/DashboardLayout.vue';
+
+const router = useRouter()
+const Layout = ref(null)
+
+onMounted(async () => {
+  await router.isReady()
+  const current = router.currentRoute.value
+  Layout.value = ['login', 'register'].includes(current.path.replace(/^\//g, '')) ? AuthLayout : DashboardLayout
+})
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
-</template>
+  <div class="bg-gray-300 dark:bg-gray-900 dark:text-gray-300 w-full h-screen">
+    <Teleport to="head">
+      <link rel="stylesheet" href="/vendors/css/icons.css">
+    </Teleport>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+    <Layout v-if="Layout">
+      <RouterView :user="user" :router="router" />
+    </Layout>
+  </div>
+</template>
