@@ -25,3 +25,23 @@
 .-slide-y-enter-from, .-slide-y-leave-to {
   @apply opacity-0 -translate-y-full;
 }
+
+.-slide-x-enter-active, .-slide-x-leave-active {
+  @apply transition-all duration-300;
+}
+
+.-slide-x-enter-from, .-slide-x-leave-to {
+  @apply opacity-0 -translate-x-full;
+}
+
+.slide-x-enter-active, .slide-x-leave-active {
+  @apply transition-all duration-300;
+}
+
+.slide-x-enter-from, .slide-x-leave-to {
+  @apply translate-x-full opacity-0;
+}
+
+.h-content {
+  height: calc(100vh - 3.5rem);
+}
