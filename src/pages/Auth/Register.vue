@@ -107,7 +107,6 @@ const submit = async () => {
                 class="bg-transparent w-full rounded focus:outline-none focus:ring ring-teal-500 border dark:border-gray-600 pl-12 py-1 transition-all"
                 :class="{ 'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.email }"
                 required
-                autofocus
               >
             </div>
 
@@ -138,7 +137,6 @@ const submit = async () => {
                 class="bg-transparent w-full rounded focus:outline-none focus:ring ring-teal-500 border dark:border-gray-600 pl-12 py-1 transition-all"
                 :class="{ 'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.username }"
                 required
-                autofocus
               >
             </div>
 
@@ -171,7 +169,6 @@ const submit = async () => {
                     class="bg-transparent w-full rounded focus:outline-none focus:ring ring-teal-500 border dark:border-gray-600 pl-12 py-1 transition-all"
                     :class="{ 'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.password }"
                     required
-                    autofocus
                   >
                 </div>
 
@@ -204,7 +201,6 @@ const submit = async () => {
                     class="bg-transparent w-full rounded focus:outline-none focus:ring ring-teal-500 border dark:border-gray-600 pl-12 py-1 transition-all"
                     :class="{ 'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.password_confirmation }"
                     required
-                    autofocus
                   >
                 </div>
 
