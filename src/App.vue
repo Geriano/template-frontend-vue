@@ -26,9 +26,13 @@ onMounted(async () => {
     try {
       const { data: user } = await axios.get(url('user'))
       
-      store.commit('login')
+      store.commit('login', user)
     } catch (e) {
       store.commit('logout')
+      store.commit('flash', {
+        type: 'error',
+        message: `${e}`,
+      })
       router.push('/login')
     }
   }
@@ -50,6 +54,35 @@ onMounted(async () => {
         :router="router"
       />
     </TransitionGroup>
+
+    <Transition name="flash">
+      <template v-if="Object.values(state.flash).length">
+        <div class="fixed top-0 right-0 w-full max-w-sm h-screen overflow-y-auto flex flex-col space-y-2 p-4">
+          <TransitionGroup name="-slide-y">
+            <div
+              v-for="(f, i) in state.flash" :key="i"
+              :class="{
+                'border-red-500': f.type === 'error',
+                'border-green-500': f.type === 'success',
+                'border-cyan-500': f.type === 'info',
+                'border-orange-500': f.type === 'warning',
+              }"
+              class="flex items-center space-x-2 p-2 rounded border-l-8 border-solid bg-white dark:bg-gray-700"
+            >
+              <div class="w-full">
+                <p class="lowercase first-letter:capitalize">
+                  {{ f.message }}
+                </p>
+              </div>
+
+              <i
+                class="bx bx-x flex-none bg-red-500 text-white rounded-md p-1 cursor-pointer"
+              />
+            </div>
+          </TransitionGroup>
+        </div>
+      </template>
+    </Transition>
   </div>
 </template>
 
@@ -59,6 +92,14 @@ onMounted(async () => {
 }
 
 .opacity-enter-from, .opacity-leave-to {
+  opacity: 0;
+}
+
+.flash-leave-active {
+  transition: all 300ms ease-in-out;
+}
+
+.flash-leave-to {
   opacity: 0;
 }
 </style>

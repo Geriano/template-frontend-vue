@@ -16,7 +16,7 @@ const open = ref({
   )),
 })
 
-watch(open, () => {
+watch(open.value, () => {
   localStorage.setItem('show_sidebar', Number(open.value.sidebar))
   localStorage.setItem('show_dropdown', Number(open.value.dropdown))
 })
@@ -26,10 +26,17 @@ const logout = async () => {
     const { data: response } = await axios.post(url('logout'))
     
     store.commit('logout')
+    store.commit('flash', {
+      type: 'success',
+      message: response.message,
+    })
     
     router().push('/login')
   } catch (e) {
-    console.log('logout error', e)
+    store.commit('flash', {
+      type: 'error',
+      message: `${e}`,
+    })
   }
 }
 

@@ -19,11 +19,6 @@ const setToken = (token, expiresAt) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   state.token = token
   localStorage.setItem('authorization', JSON.stringify({ token, expiresAt }))
-
-  setTimeout(() => {
-    store.commit('logout')
-    router.push('/login')
-  }, new Date(expiresAt) - new Date())
 }
 
 const getUser = async () => {
@@ -34,7 +29,10 @@ const getUser = async () => {
 
     router.push('/')
   } catch (e) {
-    console.log('error when getting user', e)
+    store.commit('flash', {
+      type: 'error',
+      message: `${e}`,
+    })
   }
 }
 
@@ -46,18 +44,22 @@ const submit = async () => {
       form.reset('password')
     } else {
       const { message, token, expiresAt } = data
-      success.value = message
+      store.commit('flash', {
+        type: 'success',
+        message,
+      })
       setToken(token, expiresAt)
       
       await getUser()
     }
   } catch (e) {
     const { response } = e
-    const { status, data } = response
-
-    if (status === 401) {
-      error.value = data
-    }
+    const { status, data: message } = response
+    
+    store.commit('flash', {
+      type: 'error',
+      message,
+    })
   }
 }
 

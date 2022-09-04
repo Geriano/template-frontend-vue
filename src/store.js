@@ -11,6 +11,7 @@ export const store = createStore({
       roles: [],
     },
     token: '',
+    flash: {},
   },
 
   mutations: {
@@ -29,6 +30,15 @@ export const store = createStore({
 
       localStorage.removeItem('authorization')
     },
+
+    flash: (state, { type, message }) => {
+      const id = Object.values(state.flash).length
+      state.flash[id] = { type, message }
+
+      setTimeout(() => {
+        delete(state.flash[id]);
+      }, 3000)
+    }
   },
 })
 
