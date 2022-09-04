@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch, Teleport, onMounted } from 'vue';
-import axios from 'axios'
+import { store, state } from '../store';
 
 const { title } = defineProps({
   title: String,

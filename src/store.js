@@ -7,7 +7,10 @@ export const store = createStore({
       name: '',
       username: '',
       email: '',
+      permissions: [],
+      roles: [],
     },
+    token: '',
   },
 })
 

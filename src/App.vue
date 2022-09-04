@@ -2,12 +2,35 @@
 import axios from 'axios';
 import { onMounted, Teleport, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { state } from './store';
 
 const router = useRouter()
 const ready = ref(false)
 
 onMounted(async () => {
   await router.isReady()
+
+  const authorization = localStorage.getItem('authorization')
+
+  if (authorization) {
+    const { token } = JSON.parse(authorization)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+    state.token = token
+
+    try {
+      const { data: user } = await axios.get(url('user'))
+
+      state.user.id = user.id
+      state.user.name = user.name
+      state.user.username = user.username
+      state.user.email = user.email
+      state.user.permissions = user.permissions
+      state.user.roles = user.roles
+    } catch (e) {
+      router.push('/login')
+    }
+  }
+
   ready.value = true
 })
 </script>
@@ -19,7 +42,11 @@ onMounted(async () => {
     </Teleport>
 
     <TransitionGroup name="opacity">
-      <RouterView v-if="ready" :user="user" :router="router" />
+      <RouterView
+        v-if="ready"
+        :user="state.user"
+        :router="router"
+      />
     </TransitionGroup>
   </div>
 </template>
