@@ -7,15 +7,15 @@
 }
 
 .card {
-  @apply flex flex-col bg-white dark:bg-gray-700 rounded-sm;
+  @apply flex flex-col bg-white dark:bg-gray-700 rounded;
 }
 
 .card .header {
-  @apply flex items-center bg-gray-200 dark:bg-gray-800 p-2;
+  @apply flex items-center bg-gray-200 dark:bg-gray-800 p-2 rounded-t;
 }
 
 .card .footer {
-  @apply flex items-center bg-gray-200 dark:bg-gray-800 px-2 py-1;
+  @apply flex items-center bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded-b;
 }
 
 .-slide-y-enter-active, .-slide-y-leave-active {

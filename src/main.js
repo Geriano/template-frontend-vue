@@ -8,12 +8,14 @@ import axios from 'axios'
 import Dashboard from './Pages/Dashboard.vue'
 import Login from './Pages/Auth/Login.vue'
 import Register from './Pages/Auth/Register.vue'
+import Profile from './Pages/Auth/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
+    { path: '/profile', component: Profile },
     { path: '/', component: Dashboard },
   ],
 })
@@ -23,6 +25,7 @@ const url = window.url = (path = '/') => {
 }
 
 window.router = () => router
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
 
 const app = createApp({
   render: () => h(App, { router }),
