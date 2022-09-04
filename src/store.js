@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { createStore } from 'vuex'
 
 export const store = createStore({
@@ -38,6 +39,20 @@ export const store = createStore({
       setTimeout(() => {
         delete(state.flash[id]);
       }, 3000)
+    }
+  },
+
+  actions: {
+    relog: async state => {
+      try {
+        const { data: user } = await axios.get(url('user'))
+        store.commit('login', user)
+      } catch (e) {
+        store.flash('flash', {
+          type: 'error',
+          message: `${e}`,
+        })
+      }
     }
   },
 })
