@@ -24,8 +24,6 @@ const url = window.url = (path = '/') => {
 
 window.router = () => router
 
-axios.defaults.headers.common['Content-Type'] = 'application/json'
-
 const app = createApp({
   render: () => h(App, { router }),
 })

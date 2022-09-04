@@ -12,6 +12,24 @@ export const store = createStore({
     },
     token: '',
   },
+
+  mutations: {
+    login: (state, { id, name, username, email, permissions, roles }) => {
+      state.user.id = id
+      state.user.name = name
+      state.user.username = username
+      state.user.email = email
+      state.user.permissions = permissions
+      state.user.roles = roles
+    },
+
+    logout: state => {
+      state.user.id = state.user.name = state.user.username = state.user.email = null
+      state.user.permissions = state.user.roles = []
+
+      localStorage.removeItem('authorization')
+    },
+  },
 })
 
 export const getters = store.getters

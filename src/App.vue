@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { onMounted, Teleport, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { state } from './store';
+import { state, store } from './store';
 
 const router = useRouter()
 const ready = ref(false)
@@ -13,20 +13,22 @@ onMounted(async () => {
   const authorization = localStorage.getItem('authorization')
 
   if (authorization) {
-    const { token } = JSON.parse(authorization)
+    const { token, expiresAt } = JSON.parse(authorization)
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     state.token = token
+    const expired = new Date(expiresAt) - new Date() < 1
+
+    if (expired) {
+      store.commit('logout')
+      return router.push('/login')
+    }
 
     try {
       const { data: user } = await axios.get(url('user'))
-
-      state.user.id = user.id
-      state.user.name = user.name
-      state.user.username = user.username
-      state.user.email = user.email
-      state.user.permissions = user.permissions
-      state.user.roles = user.roles
+      
+      store.commit('login')
     } catch (e) {
+      store.commit('logout')
       router.push('/login')
     }
   }

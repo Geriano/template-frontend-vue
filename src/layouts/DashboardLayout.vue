@@ -1,4 +1,5 @@
 <script setup>
+import axios from 'axios';
 import { ref, watch, Teleport, onMounted } from 'vue';
 import { store, state } from '../store';
 
@@ -20,9 +21,19 @@ watch(open, () => {
   localStorage.setItem('show_dropdown', Number(open.value.dropdown))
 })
 
-const logout = () => {
-  // 
+const logout = async () => {
+  try {
+    const { data: response } = await axios.post(url('logout'))
+    
+    store.commit('logout')
+    
+    router().push('/login')
+  } catch (e) {
+    console.log('logout error', e)
+  }
 }
+
+onMounted(() => state.user.id || router().push('/login'))
 </script>
   
 <style scoped>

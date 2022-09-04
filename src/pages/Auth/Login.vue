@@ -3,7 +3,7 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import FormData from '../../form'
 import AuthLayout from '../../Layouts/AuthLayout.vue';
-import Store, { state } from '../../store'
+import Store, { store, state } from '../../store'
 
 const { router } = defineProps(['router'])
 
@@ -15,21 +15,22 @@ const form = new FormData({
   password: '',
 })
 
-const setToken = token => {
+const setToken = (token, expiresAt) => {
   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
   state.token = token
+  localStorage.setItem('authorization', JSON.stringify({ token, expiresAt }))
+
+  setTimeout(() => {
+    store.commit('logout')
+    router.push('/login')
+  }, new Date(expiresAt) - new Date())
 }
 
 const getUser = async () => {
   try {
     const { status, data: user } = await axios.get(url('user'))
 
-    state.user.id = user.id
-    state.user.name = user.name
-    state.user.username = user.username
-    state.user.email = user.email
-    state.user.permissions = user.permissions
-    state.user.roles = user.roles
+    store.commit('login', user)
 
     router.push('/')
   } catch (e) {
@@ -44,13 +45,9 @@ const submit = async () => {
     if (status === 422) {
       form.reset('password')
     } else {
-      const { message, token, expired_at } = data
+      const { message, token, expiresAt } = data
       success.value = message
-      localStorage.setItem('authorization', JSON.stringify({
-        token, expired_at,
-      }))
-      
-      setToken(token)
+      setToken(token, expiresAt)
       
       await getUser()
     }
