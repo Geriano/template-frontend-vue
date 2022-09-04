@@ -40,7 +40,7 @@ class FormData {
   }
 
   get errors() {
-    return this.#errors.value
+    return cloneDeep(this.#errors.value)
   }
 
   reset(key) {
@@ -52,7 +52,7 @@ class FormData {
   }
 
   data() {
-    return this.#data.value
+    return cloneDeep(this.#data.value)
   }
 
   clearError(key) {
