@@ -89,7 +89,7 @@ class FormData {
     try {
       this.#processing.value = true
 
-      if (['GET', 'HEAD', 'OPTION'].includes(method)) {
+      if (['GET', 'HEAD', 'OPTIONS'].includes(method)) {
         return await axios[method.toLowerCase()](url, config)
       } else {
         const data = cloneDeep(this.#data.value)
