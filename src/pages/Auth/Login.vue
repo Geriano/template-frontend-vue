@@ -21,21 +21,6 @@ const setToken = (token, expiresAt) => {
   localStorage.setItem('authorization', JSON.stringify({ token, expiresAt }))
 }
 
-const getUser = async () => {
-  try {
-    const { status, data: user } = await axios.get(url('user'))
-
-    store.commit('login', user)
-
-    router.push('/')
-  } catch (e) {
-    store.commit('flash', {
-      type: 'error',
-      message: `${e}`,
-    })
-  }
-}
-
 const submit = async () => {
   try {
     const { status, data } = await form.post(url('login'))
@@ -49,8 +34,7 @@ const submit = async () => {
         message,
       })
       setToken(token, expiresAt)
-      
-      await getUser()
+      router.push('/')
     }
   } catch (e) {
     const { response } = e
@@ -62,8 +46,6 @@ const submit = async () => {
     })
   }
 }
-
-onMounted(() => state.user.id && router.back())
 </script>
 
 <template>
