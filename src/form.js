@@ -1,5 +1,6 @@
 import { ref } from "vue"
 import axios from "axios"
+import { cloneDeep } from 'lodash'
 
 class FormData {
   #data;
@@ -91,7 +92,13 @@ class FormData {
       if (['GET', 'HEAD', 'OPTION'].includes(method)) {
         return await axios[method.toLowerCase()](url, config)
       } else {
-        return await axios[method.toLowerCase()](url, this.#data.value, config)
+        const data = cloneDeep(this.#data.value)
+        return await axios[method.toLowerCase()](url, data, {
+          headers: {
+            'Content-Type': axios.defaults.headers.common['Content-Type'] || 'multipart/form-data',
+          },
+          ...config,
+        })
       }
     } catch (e) {
       const { response } = e
