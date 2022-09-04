@@ -29,10 +29,6 @@ onMounted(async () => {
       store.commit('login', user)
     } catch (e) {
       store.commit('logout')
-      store.commit('flash', {
-        type: 'error',
-        message: `${e}`,
-      })
       router.push('/login')
     }
   }

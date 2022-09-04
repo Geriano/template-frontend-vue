@@ -11,14 +11,11 @@ const open = ref({
   sidebar: Boolean(Number(
     localStorage.getItem('show_sidebar')
   )),
-  dropdown: Boolean(Number(
-    localStorage.getItem('show_dropdown')
-  )),
+  dropdown: false,
 })
 
 watch(open.value, () => {
   localStorage.setItem('show_sidebar', Number(open.value.sidebar))
-  localStorage.setItem('show_dropdown', Number(open.value.dropdown))
 })
 
 const logout = async () => {

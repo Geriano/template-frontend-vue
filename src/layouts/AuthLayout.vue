@@ -3,9 +3,16 @@ import axios from 'axios'
 import { onMounted } from 'vue'
 import store, { state } from '../store'
 
-onMounted(() => state.user.id && router().back())
 onMounted(async () => {
   const authorization = localStorage.getItem('authorization')
+
+  if (state.user.id) {
+    store.commit('flash', {
+      type: 'info',
+      message: 'you has been authenticated',
+    })
+    return router().push('/')
+  }
 
   if (authorization) {
     const { token } = JSON.parse(authorization)
@@ -20,10 +27,7 @@ onMounted(async () => {
       store.commit('login', user)
       router().push('/')
     } catch (e) {
-      store.commit('flash', {
-        type: 'error',
-        message: `${e}`,
-      })
+      // 
     }
   }
 })
