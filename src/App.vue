@@ -76,6 +76,7 @@ onMounted(async () => {
               </div>
 
               <i
+                @click.prevent="delete(state.flash[i])"
                 class="bx bx-x flex-none bg-red-500 text-white rounded-md p-1 cursor-pointer"
               />
             </div>
