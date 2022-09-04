@@ -4,6 +4,7 @@ import { onMounted } from 'vue'
 import store, { state } from '../store'
 
 onMounted(async () => {
+  axios.defaults.headers.common['Content-Type'] = 'application/json'
   const authorization = localStorage.getItem('authorization')
 
   if (state.user.id) {
