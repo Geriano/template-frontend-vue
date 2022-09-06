@@ -43,17 +43,25 @@ onMounted(async () => {
       <link rel="stylesheet" href="/vendors/css/icons.css">
     </Teleport>
 
-    <TransitionGroup name="opacity">
+    <Transition
+      enterFromClass="transition-all"
+      leaveActiveClass="transition-all duration-700"
+      leaveToClass="opacity-0"
+    >
       <RouterView
         v-if="ready"
         :user="state.user"
         :router="router"
       />
-    </TransitionGroup>
+
+      <div v-else class="fixed top-0 left-0 flex items-center justify-center w-full h-screen backdrop-blur-md bg-black bg-opacity-20 z-10 duration-700">
+        <i class="mdi mdi-loading text-[15rem] text-teal-500 font-bold animate-spin"></i>
+      </div>
+    </Transition>
 
     <Transition name="flash">
       <template v-if="Object.values(state.flash).length">
-        <div class="fixed top-0 right-0 w-full max-w-sm h-screen overflow-y-auto flex flex-col space-y-2 p-4">
+        <div class="fixed top-0 right-0 w-full max-w-sm max-h-screen overflow-y-auto flex flex-col space-y-2 p-4 z-20">
           <TransitionGroup name="-slide-y">
             <div
               v-for="(f, i) in state.flash" :key="i"
@@ -84,19 +92,12 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.opacity-enter-active, .opacity-leave-active {
-  transition: all 300ms ease-in-out;
-}
-
-.opacity-enter-from, .opacity-leave-to {
-  opacity: 0;
-}
-
 .flash-leave-active {
-  transition: all 300ms ease-in-out;
+  transition: all 400ms ease-in-out;
 }
 
 .flash-leave-to {
   opacity: 0;
+  transform: translateY(-100%);
 }
 </style>
