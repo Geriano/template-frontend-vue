@@ -16,7 +16,7 @@ onMounted(async () => {
     const { token, expiresAt } = JSON.parse(authorization)
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     state.token = token
-    const expired = new Date(expiresAt) - new Date() < 1
+    const expired = (new Date(expiresAt) - new Date()) < 1
 
     if (expired) {
       store.commit('logout')
