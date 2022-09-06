@@ -92,11 +92,15 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.flash-leave-active {
+.flash-enter-active, .flash-leave-active {
   transition: all 400ms ease-in-out;
 }
 
-.flash-leave-to {
+.flash-enter-active {
+  transition-duration: 50ms;
+}
+
+.flash-enter-from, .flash-leave-to {
   opacity: 0;
   transform: translateY(-100%);
 }
