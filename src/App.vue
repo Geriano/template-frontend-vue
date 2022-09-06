@@ -61,7 +61,7 @@ onMounted(async () => {
 
     <Transition name="flash">
       <template v-if="Object.values(state.flash).length">
-        <div class="fixed top-0 right-0 w-full max-w-sm max-h-screen overflow-y-auto flex flex-col space-y-2 p-4 z-20">
+        <div class="fixed top-6 right-0 w-full max-w-sm max-h-96 overflow-y-auto flex flex-col space-y-2 p-4 z-20">
           <TransitionGroup name="-slide-y">
             <div
               v-for="(f, i) in state.flash" :key="i"
@@ -71,7 +71,7 @@ onMounted(async () => {
                 'border-cyan-500': f.type === 'info',
                 'border-orange-500': f.type === 'warning',
               }"
-              class="flex items-center space-x-2 p-2 rounded border-l-8 border-solid bg-white dark:bg-gray-700"
+              class="flex items-center space-x-2 p-2 rounded border-l-8 border-solid bg-white dark:bg-gray-800 shadow-lg"
             >
               <div class="w-full">
                 <p class="lowercase first-letter:capitalize">
