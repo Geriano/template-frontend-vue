@@ -1,11 +1,12 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import FormData from '../../form'
 import AuthLayout from '../../Layouts/AuthLayout.vue';
 import Store, { store, state } from '../../store'
 
-const { router } = defineProps(['router'])
+const router = useRouter()
 
 const hidden = ref(true)
 const error = ref(null)

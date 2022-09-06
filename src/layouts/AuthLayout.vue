@@ -1,7 +1,10 @@
 <script setup>
 import axios from 'axios'
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import store, { state } from '../store'
+
+const router = useRouter()
 
 onMounted(async () => {
   axios.defaults.headers.common['Content-Type'] = 'application/json'
@@ -12,7 +15,7 @@ onMounted(async () => {
       type: 'info',
       message: 'you has been authenticated',
     })
-    return router().push('/')
+    return router.push('/')
   }
 
   if (authorization) {
@@ -26,7 +29,7 @@ onMounted(async () => {
       })
 
       store.commit('login', user)
-      router().push('/')
+      router.push('/')
     } catch (e) {
       // 
     }

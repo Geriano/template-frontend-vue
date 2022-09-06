@@ -15,6 +15,8 @@ const open = ref({
   dropdown: false,
 })
 
+const router = useRouter()
+
 watch(open.value, () => {
   localStorage.setItem('show_sidebar', Number(open.value.sidebar))
 })
@@ -29,7 +31,7 @@ const logout = async () => {
       message: response.message,
     })
     
-    router().push('/login')
+    router.push('/login')
   } catch (e) {
     store.commit('flash', {
       type: 'error',
@@ -40,7 +42,7 @@ const logout = async () => {
 
 const current = useRouter().currentRoute.value.path
 
-onMounted(() => state.user.id || router().push('/login'))
+onMounted(() => state.user.id || router.push('/login'))
 </script>
 
 <template>
