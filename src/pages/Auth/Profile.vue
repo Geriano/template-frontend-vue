@@ -20,6 +20,7 @@ const general = new FormData({
 
 const hidden = ref(true)
 const security = new FormData({
+  current_password: '',
   password: '',
   password_confirmation: '',
 })
@@ -47,14 +48,15 @@ const submitGeneralForm = async () => {
 
 const submitSecurityForm = async () => {
   try {
-    const { data: response } = await general.patch(url('update-user-security-information'))
+    const { status, data: response } = await security.patch(url('update-user-password'))
+    const { message } = response
 
-    const { message } = response.message
-
-    store.commit('flash', {
-      type: 'success',
-      message,
-    })
+    if (status !== 422) {
+      store.commit('flash', {
+        type: 'success',
+        message,
+      })
+    }
   } catch (e) {
     store.commit('flash', {
       type: 'error',
@@ -64,6 +66,7 @@ const submitSecurityForm = async () => {
     console.error(e)
   } finally {
     store.dispatch('relog')
+    security.reset()
   }
 }
 </script>
@@ -205,27 +208,62 @@ const submitSecurityForm = async () => {
             <div class="flex flex-col space-y-1">
               <div class="flex flex-col space-y-2">
                 <label for="password" class="lowercase first-letter:capitalize font-semibold">
-                  password
+                  current password
                 </label>
 
                 <div class="relative">
                   <div
                     @click.prevent="hidden = ! hidden"
                     class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
-                    :class="{ 'bg-red-500 dark:bg-red-500': general.errors.password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
+                    :class="{ 'bg-red-500 dark:bg-red-500': security.errors.current_password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
                     <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
                   </div>
                   <Input
-                    v-model="general.password"
+                    v-model="security.current_password"
                     :type="hidden ? 'password' : 'text'"
                     :class="{
-                      'border border-red-500 dark:border-red-500': general.errors.password,
+                      'border border-red-500 dark:border-red-500': security.errors.current_password,
                       'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
                     name="password"
-                    placeholder="password"
+                    placeholder="current password"
+                    required
+                  />
+                </div>
+              </div>
+
+              <InputError
+                :error="security.errors.current_password"
+                class="text-right"
+              />
+            </div>
+
+            <div class="flex flex-col space-y-1">
+              <div class="flex flex-col space-y-2">
+                <label for="password" class="lowercase first-letter:capitalize font-semibold">
+                  new password
+                </label>
+
+                <div class="relative">
+                  <div
+                    @click.prevent="hidden = ! hidden"
+                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
+                    :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
+                  >
+                    <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
+                  </div>
+                  <Input
+                    v-model="security.password"
+                    :type="hidden ? 'password' : 'text'"
+                    :class="{
+                      'border border-red-500 dark:border-red-500': security.errors.password,
+                      'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
+                    }"
+                    class="pl-12"
+                    name="password"
+                    placeholder="new password"
                     required
                   />
                 </div>
@@ -247,15 +285,15 @@ const submitSecurityForm = async () => {
                   <div
                     @click.prevent="hidden = ! hidden"
                     class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
-                    :class="{ 'bg-red-500 dark:bg-red-500': general.errors.password_confirmation, 'bg-orange-500 dark:bg-orange-500': !hidden }"
+                    :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password_confirmation, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
                   <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
                   </div>
                   <Input
-                    v-model="general.password_confirmation"
+                    v-model="security.password_confirmation"
                     :type="hidden ? 'password' : 'text'"
                     :class="{
-                      'border border-red-500 dark:border-red-500': general.errors.password_confirmation,
+                      'border border-red-500 dark:border-red-500': security.errors.password_confirmation,
                       'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
