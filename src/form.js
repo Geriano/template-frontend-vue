@@ -43,6 +43,10 @@ class FormData {
     return cloneDeep(this.#errors.value)
   }
 
+  get processing() {
+    return this.#processing.value
+  }
+
   reset(key) {
     if (key) {
       this.#data.value[key] = this.#original.value.hasOwnProperty(key) ? this.#original.value[key] : null
@@ -88,18 +92,23 @@ class FormData {
   async process(method, url, config) {
     try {
       this.#processing.value = true
+      let response
 
       if (['GET', 'HEAD', 'OPTIONS'].includes(method)) {
-        return await axios[method.toLowerCase()](url, config)
+        response = await axios[method.toLowerCase()](url, config)
       } else {
         const data = cloneDeep(this.#data.value)
-        return await axios[method.toLowerCase()](url, data, {
+        response = await axios[method.toLowerCase()](url, data, {
           headers: {
             'Content-Type': axios.defaults.headers.common['Content-Type'] || 'multipart/form-data',
           },
           ...config,
         })
       }
+
+      this.#processing.value = false
+
+      return response
     } catch (e) {
       const { response } = e
       const { status, data } = response

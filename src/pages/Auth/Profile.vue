@@ -185,8 +185,21 @@ const submitSecurityForm = async () => {
 
         <template #footer>
           <div class="flex items-center space-x-1 justify-end w-full">
-            <Button class="bg-gray-600 hover:bg-gray-700 text-sm">
-              <i class="mdi mdi-check"></i>
+            <Button
+              :disabled="general.processing"
+              :class="{
+                'dark:bg-gray-700 dark:hover:bg-gray-800': general.processing,
+                'dark:bg-gray-600 dark:hover:bg-gray-700': !general.processing,
+              }"
+              class="text-sm"
+            >
+              <i
+                :class="{
+                  'mdi-loading animate-spin': general.processing,
+                  'mdi-check': !general.processing,
+                }"
+                class="mdi transition-all"
+              />
               <p class="uppercase font-semibold">
                 update
               </p>
@@ -314,8 +327,21 @@ const submitSecurityForm = async () => {
 
         <template #footer>
           <div class="flex items-center space-x-1 justify-end w-full">
-            <Button class="bg-gray-600 hover:bg-gray-700 text-sm">
-              <i class="mdi mdi-check"></i>
+            <Button
+              :disabled="security.processing"
+              :class="{
+                'dark:bg-gray-700 dark:hover:bg-gray-800': security.processing,
+                'dark:bg-gray-600 dark:hover:bg-gray-700': !security.processing,
+              }"
+              class="text-sm"
+            >
+              <i
+                :class="{
+                  'mdi-loading animate-spin': security.processing,
+                  'mdi-check': !security.processing,
+                }"
+                class="mdi transition-all"
+              />
               <p class="uppercase font-semibold">
                 update
               </p>
