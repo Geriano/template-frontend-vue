@@ -51,15 +51,15 @@ const submit = async () => {
 
 <template>
   <AuthLayout>
-    <div class="flex flex-col lg:flex-row items-center justify-around w-full h-full p-4 bg-gray-800 rounded-md">
+    <div class="flex flex-col lg:flex-row items-center justify-around w-full h-full p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
       <div class="hidden lg:block lg:w-1/3">
-        <h1 class="text-5xl font-bold text-gray-100 lowercase first-letter:capitalize">
+        <h1 class="text-5xl font-bold text-gray-800 dark:text-gray-100 lowercase first-letter:capitalize">
           coding every time, every where
         </h1>
       </div>
 
       <div class="w-full max-w-xl lg:max-w-md">
-        <form @submit.prevent="submit" class="flex flex-col space-y-2 w-full bg-gray-700 rounded-md border-r-8 border-teal-500 border-solid shadow-md">
+        <form @submit.prevent="submit" class="flex flex-col space-y-2 w-full bg-white dark:bg-gray-700 rounded-md border-l-8 border-teal-500 border-solid shadow-md">
           <div class="flex flex-col space-y-2 px-6 py-4">
             <label for="username" class="lowercase first-letter:capitalize font-semibold">
               username
@@ -68,7 +68,7 @@ const submit = async () => {
             <div class="flex flex-col space-y-1">
               <div class="relative w-full">
                 <div
-                  class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
+                  class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2"
                   :class="{ 'bg-red-500 dark:bg-red-500': form.errors.username }"
                 >
                   <i class="mdi mdi-at text-xl"></i>
@@ -100,8 +100,11 @@ const submit = async () => {
               <div class="relative w-full">
                 <div
                   @click.prevent="hidden = ! hidden"
-                  class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
-                  :class="{ 'bg-red-500 dark:bg-red-500': form.errors.password }"
+                  class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
+                  :class="{
+                    'bg-red-500 dark:bg-red-500': form.errors.password,
+                    'bg-orange-500 dark:bg-orange-500': !hidden,
+                  }"
                 >
                   <i class="mdi mdi-form-textbox-password text-xl transition-all duration-300" :class="!hidden && 'rotate-180'"></i>
                 </div>
@@ -109,8 +112,12 @@ const submit = async () => {
                   v-model="form.password"
                   :type="hidden ? 'password' : 'text'"
                   placeholder="password"
-                  class="bg-transparent w-full rounded focus:outline-none focus:ring ring-teal-500 border dark:border-gray-600 pl-12 py-1 transition-all"
-                  :class="{ 'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.password }"
+                  class="bg-transparent w-full border rounded focus:outline-none focus:ring pl-12 py-1 transition-all"
+                  :class="{
+                    'ring-1 ring-red-500 border-red-500 dark:border-red-500': form.errors.password,
+                    'ring-1 ring-orange-500 border-orange-500 dark:border-orange-500': !hidden,
+                    'ring-teal-500 dark:border-gray-600': hidden,
+                  }"
                   required
                   autofocus
                 >
@@ -136,8 +143,14 @@ const submit = async () => {
               class="px-3 py-1 rounded text-sm transition-all"
               type="submit"
             >
-              <div class="flex items-center space-x-1">
-                <i class="mdi mdi-check"></i>
+              <div class="flex items-center space-x-1 text-gray-50">
+                <i
+                  :class="{
+                    'mdi-loading animate-spin': form.processing,
+                    'mdi-check': !form.processing,
+                  }"
+                  class="mdi transition-all"
+                />
                 <p class="uppercase font-semibold">
                   login
                 </p>

@@ -38,13 +38,13 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-gray-300 dark:bg-gray-900 dark:text-gray-300 w-full h-screen">
+  <div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-300 w-full h-screen">
     <Teleport to="head">
       <link rel="stylesheet" href="/vendors/css/icons.css">
     </Teleport>
 
     <Transition
-      enterFromClass="transition-all"
+      enterActiveClass="transition-all duration-300"
       leaveActiveClass="transition-all duration-700"
       leaveToClass="opacity-0"
     >

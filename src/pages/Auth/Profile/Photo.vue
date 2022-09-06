@@ -50,7 +50,7 @@ const remove = async () => {
         <Button
           @click.prevent="$refs.input.click()"
           type="button"
-          class="dark:bg-gray-600"
+          class="bg-gray-600 hover:bg-gray-700 text-gray-50"
         >
           <i
             :class="{
@@ -70,7 +70,7 @@ const remove = async () => {
             @click.prevent="remove"
             v-if="user.profile_photo_url"
             type="button"
-            class="dark:bg-gray-600"
+            class="bg-gray-600 hover:bg-gray-700 text-gray-50"
           >
             <i class="mdi mdi-delete"></i>
             <div class="uppercase font-semibold text-sm">

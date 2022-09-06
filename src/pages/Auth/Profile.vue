@@ -73,7 +73,7 @@ const submitSecurityForm = async () => {
 
 <template>
   <DashboardLayout title="Profile">
-    <form @submit.prevent="submitGeneralForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center md:justify-between">
+    <form @submit.prevent="submitGeneralForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:justify-between">
       <div class="w-full md:w-1/3">
         <h1 class="text-xl font-semibold lowercase first-letter:capitalize">
           general information
@@ -92,7 +92,7 @@ const submitSecurityForm = async () => {
 
                 <div class="relative">
                   <div
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2"
                     :class="{ 'bg-red-500 dark:bg-red-500': general.errors.name }"
                   >
                     <i class="mdi mdi-account text-xl"></i>
@@ -125,7 +125,7 @@ const submitSecurityForm = async () => {
 
                 <div class="relative">
                   <div
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2"
                     :class="{ 'bg-red-500 dark:bg-red-500': general.errors.username }"
                   >
                     <i class="mdi mdi-at text-xl"></i>
@@ -157,7 +157,7 @@ const submitSecurityForm = async () => {
 
                 <div class="relative">
                   <div
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2"
                     :class="{ 'bg-red-500 dark:bg-red-500': general.errors.email }"
                   >
                     <i class="mdi mdi-email-outline text-xl"></i>
@@ -188,8 +188,8 @@ const submitSecurityForm = async () => {
             <Button
               :disabled="general.processing"
               :class="{
-                'dark:bg-gray-700 dark:hover:bg-gray-800': general.processing,
-                'dark:bg-gray-600 dark:hover:bg-gray-700': !general.processing,
+                'bg-gray-700 hover:bg-gray-800 text-gray-50': general.processing,
+                'bg-gray-600 hover:bg-gray-700 text-gray-50': !general.processing,
               }"
               class="text-sm"
             >
@@ -209,7 +209,7 @@ const submitSecurityForm = async () => {
       </Card>
     </form>
 
-    <form @submit.prevent="submitSecurityForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:items-center md:justify-between">
+    <form @submit.prevent="submitSecurityForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:justify-between">
       <div class="w-full md:w-1/3">
         <h1 class="text-xl font-semibold lowercase first-letter:capitalize">
           security
@@ -227,7 +227,7 @@ const submitSecurityForm = async () => {
                 <div class="relative">
                   <div
                     @click.prevent="hidden = ! hidden"
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.current_password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
                     <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
@@ -237,7 +237,7 @@ const submitSecurityForm = async () => {
                     :type="hidden ? 'password' : 'text'"
                     :class="{
                       'border border-red-500 dark:border-red-500': security.errors.current_password,
-                      'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
+                      'ring-1 border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
                     name="password"
@@ -262,7 +262,7 @@ const submitSecurityForm = async () => {
                 <div class="relative">
                   <div
                     @click.prevent="hidden = ! hidden"
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
                     <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
@@ -272,7 +272,7 @@ const submitSecurityForm = async () => {
                     :type="hidden ? 'password' : 'text'"
                     :class="{
                       'border border-red-500 dark:border-red-500': security.errors.password,
-                      'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
+                      'ring-1 border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
                     name="password"
@@ -297,7 +297,7 @@ const submitSecurityForm = async () => {
                 <div class="relative">
                   <div
                     @click.prevent="hidden = ! hidden"
-                    class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2 cursor-pointer"
+                    class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password_confirmation, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
                   <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
@@ -307,7 +307,7 @@ const submitSecurityForm = async () => {
                     :type="hidden ? 'password' : 'text'"
                     :class="{
                       'border border-red-500 dark:border-red-500': security.errors.password_confirmation,
-                      'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
+                      'ring-1 border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
                     name="password_confirmation"
@@ -330,8 +330,8 @@ const submitSecurityForm = async () => {
             <Button
               :disabled="security.processing"
               :class="{
-                'dark:bg-gray-700 dark:hover:bg-gray-800': security.processing,
-                'dark:bg-gray-600 dark:hover:bg-gray-700': !security.processing,
+                'bg-gray-700 hover:bg-gray-800 text-gray-50': security.processing,
+                'bg-gray-600 hover:bg-gray-700 text-gray-50': !security.processing,
               }"
               class="text-sm"
             >
