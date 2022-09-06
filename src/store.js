@@ -8,6 +8,7 @@ export const store = createStore({
       name: '',
       username: '',
       email: '',
+      profile_photo_url: '',
       permissions: [],
       roles: [],
     },
@@ -16,17 +17,18 @@ export const store = createStore({
   },
 
   mutations: {
-    login: (state, { id, name, username, email, permissions, roles }) => {
+    login: (state, { id, name, username, email, profile_photo_url, permissions, roles }) => {
       state.user.id = id
       state.user.name = name
       state.user.username = username
       state.user.email = email
+      state.user.profile_photo_url = profile_photo_url
       state.user.permissions = permissions
       state.user.roles = roles
     },
 
     logout: state => {
-      state.user.id = state.user.name = state.user.username = state.user.email = null
+      state.user.id = state.user.name = state.user.username = state.user.email = state.user.profile_photo_url = null
       state.user.permissions = state.user.roles = []
 
       localStorage.removeItem('authorization')

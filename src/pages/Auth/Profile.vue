@@ -12,6 +12,7 @@ import Photo from './Profile/Photo.vue'
 const { user } = state
 
 const general = new FormData({
+  photo: null,
   name: user.name,
   username: user.username,
   email: user.email,
@@ -25,13 +26,8 @@ const security = new FormData({
 
 const submitGeneralForm = async () => {
   try {
-    const { data: response } = await general.patch(url('update-user-general-information'), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-
-    const { message } = response.message
+    const { data: response } = await general.patch(url('update-user-general-information'))
+    const { message } = response
 
     store.commit('flash', {
       type: 'success',
@@ -51,11 +47,7 @@ const submitGeneralForm = async () => {
 
 const submitSecurityForm = async () => {
   try {
-    const { data: response } = await general.patch(url('update-user-security-information'), {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
+    const { data: response } = await general.patch(url('update-user-security-information'))
 
     const { message } = response.message
 
@@ -87,7 +79,7 @@ const submitSecurityForm = async () => {
       <Card class="md:max-w-3xl">
         <template #body>
           <div class="flex flex-col space-y-2 p-4">
-            <Photo />
+            <Photo v-model="general.photo" :error="general.errors.photo" />
 
             <div class="flex flex-col space-y-1">
               <div class="flex flex-col space-y-2">
@@ -100,7 +92,7 @@ const submitSecurityForm = async () => {
                     class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
                     :class="{ 'bg-red-500 dark:bg-red-500': general.errors.name }"
                   >
-                    <i class="mdi mdi-at text-xl"></i>
+                    <i class="mdi mdi-account text-xl"></i>
                   </div>
                   <Input
                     v-model="general.name"
@@ -133,7 +125,7 @@ const submitSecurityForm = async () => {
                     class="absolute top-0 left-0 h-full flex items-center dark:bg-gray-600 rounded-l px-2"
                     :class="{ 'bg-red-500 dark:bg-red-500': general.errors.username }"
                   >
-                    <i class="mdi mdi-account text-xl"></i>
+                    <i class="mdi mdi-at text-xl"></i>
                   </div>
                   <Input
                     v-model="general.username"
@@ -232,6 +224,7 @@ const submitSecurityForm = async () => {
                       'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
+                    name="password"
                     placeholder="password"
                     required
                   />
@@ -266,6 +259,7 @@ const submitSecurityForm = async () => {
                       'border border-orange-500 dark:border-orange-500 ring-orange-500': !hidden,
                     }"
                     class="pl-12"
+                    name="password_confirmation"
                     placeholder="password confirmation"
                     required
                   />
