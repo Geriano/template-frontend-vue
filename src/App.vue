@@ -20,7 +20,7 @@ onMounted(async () => {
 
     if (expired) {
       store.commit('logout')
-      return router.push('/login')
+      return router.push('login')
     }
 
     try {
@@ -29,7 +29,7 @@ onMounted(async () => {
       store.commit('login', user)
     } catch (e) {
       store.commit('logout')
-      router.push('/login')
+      router.push('login')
     }
   }
 

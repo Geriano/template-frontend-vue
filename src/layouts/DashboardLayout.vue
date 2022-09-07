@@ -34,7 +34,7 @@ const logout = async () => {
       message: response.message,
     })
     
-    router.push('/login')
+    router.push('login')
   } catch (e) {
     store.commit('flash', {
       type: 'error',
@@ -47,7 +47,7 @@ const current = useRouter().currentRoute.value.path
 
 onMounted(async () => {
   await router.isReady()
-  state.user.id || router.push('/login')
+  state.user.id || router.push('login')
   ready.value = true
 })
 </script>
