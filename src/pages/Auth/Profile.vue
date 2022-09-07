@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import store, { state } from '../../store';
 import FormData from '../../form';
-import DashboardLayout from '../../Layouts/DashboardLayout.vue';
 import Button from '../../Components/Button.vue';
 import Card from '../../Components/Card.vue';
 import Input from '../../Components/Input.vue';
@@ -72,7 +71,7 @@ const submitSecurityForm = async () => {
 </script>
 
 <template>
-  <DashboardLayout title="Profile">
+  <div>
     <form @submit.prevent="submitGeneralForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:justify-between">
       <div class="w-full md:w-1/3">
         <h1 class="text-xl font-semibold lowercase first-letter:capitalize">
@@ -350,5 +349,5 @@ const submitSecurityForm = async () => {
         </template>
       </Card>
     </form>
-  </DashboardLayout>
+  </div>
 </template>

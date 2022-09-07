@@ -1,12 +1,14 @@
 <script setup>
 import axios from 'axios'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import store, { state } from '../store'
 
 const router = useRouter()
+const ready = ref(false)
 
 onMounted(async () => {
+  await router.isReady()
   axios.defaults.headers.common['Content-Type'] = 'application/json'
   const authorization = localStorage.getItem('authorization')
 
@@ -34,11 +36,22 @@ onMounted(async () => {
       // 
     }
   }
+
+  ready.value = true
 })
 </script>
 
 <template>
   <div class="flex items-center justify-center w-full h-screen px-4 py-2 sm:px-6 sm:py-4 md:px-10 md:py-6 lg:px-16 lg:py-10 xl:px-28 xl:py-16 transition-all duration-700">
-    <slot />
+    <Transition
+      enterActiveClass="transition-all"
+      leaveActiveClass="transition-all"
+      enterFromClass="opacity-0 -translate-y-full"
+      leaveToClass="opacity-0 -translate-y-full"
+    >
+      <RouterView
+        v-if="ready"
+      />
+    </Transition>
   </div>
 </template>

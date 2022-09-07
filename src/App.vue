@@ -44,8 +44,9 @@ onMounted(async () => {
     </Teleport>
 
     <Transition
-      enterActiveClass="transition-all duration-300"
-      leaveActiveClass="transition-all duration-700"
+      enterActiveClass="transition-all"
+      leaveActiveClass="transition-all"
+      enterFromClass="opacity-0"
       leaveToClass="opacity-0"
     >
       <RouterView

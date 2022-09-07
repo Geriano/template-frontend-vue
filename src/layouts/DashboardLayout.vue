@@ -10,6 +10,7 @@ const { title } = defineProps({
   title: String,
 })
 
+const ready = ref(false)
 const open = ref({
   sidebar: Boolean(Number(
     localStorage.getItem('show_sidebar')
@@ -44,7 +45,11 @@ const logout = async () => {
 
 const current = useRouter().currentRoute.value.path
 
-onMounted(() => state.user.id || router.push('/login'))
+onMounted(async () => {
+  await router.isReady()
+  state.user.id || router.push('/login')
+  ready.value = true
+})
 </script>
 
 <template>
@@ -66,7 +71,7 @@ onMounted(() => state.user.id || router.push('/login'))
         <i @click.prevent="open.dropdown = ! open.dropdown" :class="{ 'text-white -rotate-90': open.dropdown, 'text-gray-100': !open.dropdown }" class="mdi mdi-arrow-left-drop-circle text-2xl transition-all duration-[400ms] cursor-pointer"></i>
 
         <Transition name="slide-x">
-          <div v-if="open.dropdown" class="absolute top-10 right-0 w-52 flex flex-col space-y-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow z-10">
+          <div v-if="open.dropdown" @click.prevent="open.dropdown = false" class="absolute top-10 right-0 w-52 flex flex-col space-y-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow z-10">
             <div class="border-b border-gray-100 dark:border-gray-500 mx-2 mt-2"></div>
             <RouterLink to="profile" class="flex items-center space-x-1 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-100 rounded transition-all">
               <i class="mdi mdi-face-man"></i> <div class="lowercase first-letter:capitalize font-semibold">profile</div>
@@ -88,7 +93,16 @@ onMounted(() => state.user.id || router.push('/login'))
       class="transition-all duration-300 h-content overflow-y-auto"
     >
       <div class="flex flex-col space-y-4 px-6 py-4">
-        <slot />
+        <Transition
+          enterActiveClass="transition-all duration-300"
+          leaveActiveClass="transition-all duration-700"
+          enterFromClass="opacity-0 blur"
+          leaveToClass="opacity-0 blur"
+        >
+          <RouterView
+            v-if="ready"
+          />
+        </Transition>
       </div>
     </main>
 
