@@ -13,6 +13,8 @@ import AuthLayout from './Layouts/AuthLayout.vue'
 import Login from './Pages/Auth/Login.vue'
 import Register from './Pages/Auth/Register.vue'
 
+import NotFound from './Pages/NotFound.vue'
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -32,6 +34,11 @@ const router = createRouter({
         { path: '/login', name: 'login', component: Login },
         { path: '/register', name: 'register', component: Register },
       ],
+    },
+
+    {
+      path: '/:any',
+      component: NotFound,
     },
   ],
 })
