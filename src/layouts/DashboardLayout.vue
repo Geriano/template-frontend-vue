@@ -3,6 +3,8 @@ import axios from 'axios';
 import { ref, watch, Teleport, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { store, state } from '../store';
+import Link from '../Components/Sidebar/Link.vue';
+import Links from '../Components/Sidebar/Links.vue';
 
 const { title } = defineProps({
   title: String,
@@ -114,24 +116,54 @@ onMounted(() => state.user.id || router.push('/login'))
           </TransitionGroup>
         </div>
 
-        <div class="flex flex-col w-full h-content overflow-y-auto">
-          <RouterLink to="/" class="w-full" title="dashboard">
-            <div
-              class="flex items-center space-x-2 hover:bg-gray-700 px-4 py-2 transition-all duration-300 text-gray-100"
-              :class="{
-                'justify-center': !open.sidebar,
-                'bg-gray-700': current === '/',
-              }"
-            >
-              <i class="flex-none mdi mdi-view-dashboard"></i>
-              
-              <Transition name="-slide-x">
-                <div v-if="open.sidebar" class="uppercase font-semibold">
-                  dashboard
-                </div>
-              </Transition>
-            </div>
-          </RouterLink>
+        <div class="flex flex-col w-full h-content overflow-y-auto" :class="open.sidebar && 'p-2 space-y-2'">
+          <Link to="/" :open="open.sidebar" active="/">
+            <template #icon>
+              <i class="mdi mdi-view-dashboard" />
+            </template>
+
+            <template #body>
+              dashboard
+            </template>
+          </Link>
+
+          <Links :open="open.sidebar" active="/" text="builtin">
+            <template #icon>
+              <i class="mdi mdi-circle" />
+            </template>
+
+            <template #childs>
+              <Link to="/permission" :open="open.sidebar" active="/permission">
+                <template #icon>
+                  <i class="mdi mdi-account-key" />
+                </template>
+
+                <template #body>
+                  permission
+                </template>
+              </Link>
+
+              <Link to="/role" :open="open.sidebar" active="/role">
+                <template #icon>
+                  <i class="mdi mdi-account-settings" />
+                </template>
+
+                <template #body>
+                  role
+                </template>
+              </Link>
+
+              <Link to="/user" :open="open.sidebar" active="/user">
+                <template #icon>
+                  <i class="mdi mdi-account-group" />
+                </template>
+
+                <template #body>
+                  user
+                </template>
+              </Link>
+            </template>
+          </Links>
         </div>
       </div>
     </div>
