@@ -71,7 +71,7 @@ const submitSecurityForm = async () => {
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col space-y-6">
     <form @submit.prevent="submitGeneralForm" class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 md:justify-between">
       <div class="w-full md:w-1/3">
         <h1 class="text-xl font-semibold lowercase first-letter:capitalize">
