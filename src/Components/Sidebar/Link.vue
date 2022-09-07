@@ -1,10 +1,5 @@
 <script setup>
-import { useRouter } from "vue-router"
-
 defineProps(['open', 'active', 'to'])
-
-const router = useRouter()
-const current = router.currentRoute
 </script>
 
 <template>
@@ -15,7 +10,7 @@ const current = router.currentRoute
         :class="{
           'justify-center': !open,
           'rounded': open,
-          'bg-gray-700': current.path === active,
+          'bg-gray-700': active,
         }"
       >
         <div class="flex-none">

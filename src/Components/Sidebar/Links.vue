@@ -3,12 +3,12 @@ import { ref } from "vue";
 import { useRouter } from "vue-router"
 import Link from './Link.vue'
 
-defineProps(['open', 'active', 'text'])
+const { active } = defineProps(['open', 'active', 'text'])
 
 const router = useRouter()
 const current = router.currentRoute
 
-const show = ref(false)
+const show = ref(active || false)
 </script>
 
 <template>
