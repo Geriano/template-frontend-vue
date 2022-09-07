@@ -20,7 +20,7 @@ onMounted(async () => {
 
     if (expired) {
       store.commit('logout')
-      return router.push('login')
+      return router.push({ name: 'login' })
     }
 
     try {
@@ -29,7 +29,7 @@ onMounted(async () => {
       store.commit('login', user)
     } catch (e) {
       store.commit('logout')
-      router.push('login')
+      router.push({ name: 'login' })
     }
   }
 
@@ -52,7 +52,6 @@ onMounted(async () => {
       <RouterView
         v-if="ready"
         :user="state.user"
-        :router="router"
       />
 
       <div v-else class="fixed top-0 left-0 flex items-center justify-center w-full h-screen backdrop-blur-md bg-black bg-opacity-20 z-10 duration-700">

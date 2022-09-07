@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import store, { state } from '../store'
 
+const { user } = defineProps(['user'])
 const router = useRouter()
 const ready = ref(false)
 
@@ -17,7 +18,7 @@ onMounted(async () => {
       type: 'info',
       message: 'you has been authenticated',
     })
-    return router.push('/')
+    return router.push({ name: 'home' })
   }
 
   if (authorization) {
@@ -31,7 +32,7 @@ onMounted(async () => {
       })
 
       store.commit('login', user)
-      router.push('/')
+      router.push({ name: 'home' })
     } catch (e) {
       // 
     }

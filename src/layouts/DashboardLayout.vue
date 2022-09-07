@@ -1,14 +1,12 @@
 <script setup>
 import axios from 'axios';
-import { ref, watch, Teleport, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { store, state } from '../store';
 import Link from '../Components/Sidebar/Link.vue';
 import Links from '../Components/Sidebar/Links.vue';
 
-const { title } = defineProps({
-  title: String,
-})
+const { user } = defineProps(['user'])
 
 const ready = ref(false)
 const open = ref({
@@ -34,7 +32,7 @@ const logout = async () => {
       message: response.message,
     })
     
-    router.push('login')
+    router.push({ name: 'login' })
   } catch (e) {
     store.commit('flash', {
       type: 'error',
@@ -47,17 +45,13 @@ const current = useRouter().currentRoute.value.path
 
 onMounted(async () => {
   await router.isReady()
-  state.user.id || router.push('login')
+  state.user.id || router.push({ name: 'login' })
   ready.value = true
 })
 </script>
 
 <template>
   <div class="relative">
-    <Teleport to="head">
-      <title class="lowercase first-letter:capitalize">{{ title }}</title>
-    </Teleport>
-
     <div class="flex items-center justify-between w-full h-14 bg-teal-500 px-4 py-2">
       <div class="w-14 h-full"></div>
 
@@ -73,7 +67,7 @@ onMounted(async () => {
         <Transition name="slide-x">
           <div v-if="open.dropdown" @click.prevent="open.dropdown = false" class="absolute top-10 right-0 w-52 flex flex-col space-y-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow z-10">
             <div class="border-b border-gray-100 dark:border-gray-500 mx-2 mt-2"></div>
-            <RouterLink to="profile" class="flex items-center space-x-1 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-100 rounded transition-all">
+            <RouterLink :to="{ name: 'profile' }" class="flex items-center space-x-1 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-100 rounded transition-all">
               <i class="mdi mdi-face-man"></i> <div class="lowercase first-letter:capitalize font-semibold">profile</div>
             </RouterLink>
             <div class="border-b border-gray-100 dark:border-gray-500 mx-2 mt-2"></div>
@@ -101,6 +95,7 @@ onMounted(async () => {
         >
           <RouterView
             v-if="ready"
+            :user="user"
           />
         </Transition>
       </div>
@@ -131,7 +126,7 @@ onMounted(async () => {
         </div>
 
         <div class="flex flex-col w-full h-content overflow-y-auto" :class="open.sidebar && 'p-2 space-y-2'">
-          <Link to="/" :open="open.sidebar" active="/">
+          <Link :to="{ name: 'home' }" :open="open.sidebar" active="/">
             <template #icon>
               <i class="mdi mdi-view-dashboard" />
             </template>
@@ -147,7 +142,7 @@ onMounted(async () => {
             </template>
 
             <template #childs>
-              <Link to="/permission" :open="open.sidebar" active="/permission">
+              <Link :to="{ name: 'permission' }" :open="open.sidebar" active="/permission">
                 <template #icon>
                   <i class="mdi mdi-account-key" />
                 </template>
@@ -157,7 +152,7 @@ onMounted(async () => {
                 </template>
               </Link>
 
-              <Link to="/role" :open="open.sidebar" active="/role">
+              <Link :to="{ name: 'role' }" :open="open.sidebar" active="/role">
                 <template #icon>
                   <i class="mdi mdi-account-settings" />
                 </template>
@@ -167,7 +162,7 @@ onMounted(async () => {
                 </template>
               </Link>
 
-              <Link to="/user" :open="open.sidebar" active="/user">
+              <Link :to="{ name: 'user' }" :open="open.sidebar" active="/user">
                 <template #icon>
                   <i class="mdi mdi-account-group" />
                 </template>

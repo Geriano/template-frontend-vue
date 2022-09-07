@@ -130,7 +130,7 @@ const submit = async () => {
         </div>
 
         <div class="flex items-center justify-between p-2">
-          <RouterLink to="/register" class="text-sm lowercase first-letter:capitalize">not have account?</RouterLink>
+          <RouterLink :to="{ name: 'register' }" class="text-sm lowercase first-letter:capitalize">not have account?</RouterLink>
 
           <button
             :disabled="form.processing"

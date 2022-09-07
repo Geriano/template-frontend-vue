@@ -8,7 +8,7 @@ import Input from '../../Components/Input.vue';
 import InputError from '../../Components/InputError.vue';
 import Photo from './Profile/Photo.vue'
 
-const { user } = state
+const { user } = defineProps(['user'])
 
 const general = new FormData({
   photo: null,
@@ -26,13 +26,15 @@ const security = new FormData({
 
 const submitGeneralForm = async () => {
   try {
-    const { data: response } = await general.patch(url('update-user-general-information'))
+    const { status, data: response } = await general.patch(url('update-user-general-information'))
     const { message } = response
 
-    store.commit('flash', {
-      type: 'success',
-      message,
-    })
+    if (status !== 422) {
+      store.commit('flash', {
+        type: 'success',
+        message,
+      })
+    }
   } catch (e) {
     store.commit('flash', {
       type: 'error',

@@ -22,7 +22,7 @@ const router = createRouter({
       path: '/',
       component: DashboardLayout,
       children: [
-        { path: '', name: 'dashboard', component: Dashboard, },
+        { path: '', name: 'home', component: Dashboard, },
         { path: '/profile', name: 'profile', component: Profile },
       ],
     },

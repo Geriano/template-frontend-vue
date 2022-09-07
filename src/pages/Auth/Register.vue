@@ -31,7 +31,7 @@ const submit = async () => {
         type: 'success',
         message,
       })
-      router.push('/login')
+      router.push({ name: 'login' })
     }
   } catch (e) {
     const { response } = e
@@ -220,7 +220,7 @@ const submit = async () => {
       </div>
 
       <div class="flex items-center justify-between p-2">
-        <RouterLink to="/login" class="text-sm lowercase first-letter:capitalize">already have account?</RouterLink>
+        <RouterLink :to="{ name: 'login' }" class="text-sm lowercase first-letter:capitalize">already have account?</RouterLink>
 
         <button
           :disabled="form.processing"
