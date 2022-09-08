@@ -11,5 +11,9 @@
     <div :class="$slots.footer && 'footer'">
       <slot name="footer" />
     </div>
+
+    <div class="sticky bottom-0 left-0" :class="$slots['footer-sticky'] && 'footer'">
+      <slot name="footer-sticky" />
+    </div>
   </div>
 </template>

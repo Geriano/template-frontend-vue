@@ -38,7 +38,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-300 w-full h-screen">
+  <div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-300 w-full h-screen antialiased">
     <Teleport to="head">
       <link rel="stylesheet" href="/vendors/css/icons.css">
     </Teleport>
@@ -61,7 +61,7 @@ onMounted(async () => {
 
     <Transition name="flash">
       <template v-if="Object.values(state.flash).length">
-        <div class="fixed top-6 right-0 w-full max-w-sm max-h-96 overflow-y-auto flex flex-col space-y-2 p-4 z-20">
+        <div class="fixed top-6 right-0 w-full max-w-sm max-h-96 overflow-y-auto flex flex-col space-y-2 p-4 z-40">
           <TransitionGroup name="-slide-y">
             <div
               v-for="(f, i) in state.flash" :key="i"

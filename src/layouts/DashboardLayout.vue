@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { store, state } from '../store';
 import Link from '../Components/Sidebar/Link.vue';
@@ -41,13 +41,23 @@ const logout = async () => {
   }
 }
 
-const current = useRouter().currentRoute.value.path
+const current = useRouter().currentRoute
 
 onMounted(async () => {
   await router.isReady()
   state.user.id || router.push({ name: 'login' })
   ready.value = true
 })
+
+const q = e => {
+  if (e.key === 'q' && !(e.target instanceof HTMLInputElement)) {
+    e.preventDefault()
+    open.value.sidebar = ! open.value.sidebar
+  }
+}
+
+onMounted(() => document.addEventListener('keyup', q))
+onUnmounted(() => document.removeEventListener('keyup', q))
 </script>
 
 <template>
@@ -87,17 +97,10 @@ onMounted(async () => {
       class="transition-all duration-300 h-content overflow-y-auto"
     >
       <div class="flex flex-col space-y-4 px-6 py-4">
-        <Transition
-          enterActiveClass="transition-all duration-300"
-          leaveActiveClass="transition-all duration-700"
-          enterFromClass="opacity-0 blur"
-          leaveToClass="opacity-0 blur"
-        >
-          <RouterView
-            v-if="ready"
-            :user="user"
-          />
-        </Transition>
+        <RouterView
+          v-if="ready"
+          :user="user"
+        />
       </div>
     </main>
 
@@ -126,7 +129,11 @@ onMounted(async () => {
         </div>
 
         <div class="flex flex-col w-full h-content overflow-y-auto" :class="open.sidebar && 'p-2 space-y-2'">
-          <Link :to="{ name: 'home' }" :open="open.sidebar" active="/">
+          <Link
+            :to="{ name: 'home' }"
+            :open="open.sidebar"
+            :active="current.name === 'home'"
+          >
             <template #icon>
               <i class="mdi mdi-view-dashboard" />
             </template>
@@ -136,13 +143,25 @@ onMounted(async () => {
             </template>
           </Link>
 
-          <Links :open="open.sidebar" active="/" text="builtin">
+          <Links
+            :open="open.sidebar"
+            :active="[
+              'superuser.permission',
+              'superuser.role',
+              'superuser.user',
+            ].includes(current.name)"
+            text="builtin"
+          >
             <template #icon>
               <i class="mdi mdi-circle" />
             </template>
 
             <template #childs>
-              <Link :to="{ name: 'permission' }" :open="open.sidebar" active="/permission">
+              <Link
+                :to="{ name: 'superuser.permission' }"
+                :open="open.sidebar"
+                :active="current.name === 'superuser.permission'"
+              >
                 <template #icon>
                   <i class="mdi mdi-account-key" />
                 </template>
@@ -152,7 +171,11 @@ onMounted(async () => {
                 </template>
               </Link>
 
-              <Link :to="{ name: 'role' }" :open="open.sidebar" active="/role">
+              <Link
+                :to="{ name: 'role' }"
+                :open="open.sidebar"
+                :active="current.name === 'role'"
+              >
                 <template #icon>
                   <i class="mdi mdi-account-settings" />
                 </template>
@@ -162,7 +185,11 @@ onMounted(async () => {
                 </template>
               </Link>
 
-              <Link :to="{ name: 'user' }" :open="open.sidebar" active="/user">
+              <Link
+                :to="{ name: 'user' }"
+                :open="open.sidebar"
+                :active="current.name === 'user'"
+              >
                 <template #icon>
                   <i class="mdi mdi-account-group" />
                 </template>

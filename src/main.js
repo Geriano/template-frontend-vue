@@ -4,43 +4,11 @@ import './style.css'
 import App from './App.vue'
 import Store, { store } from './store'
 import axios from 'axios'
-
-import DashboardLayout from './Layouts/DashboardLayout.vue'
-import Dashboard from './Pages/Dashboard.vue'
-import Profile from './Pages/Auth/Profile.vue'
-
-import AuthLayout from './Layouts/AuthLayout.vue'
-import Login from './Pages/Auth/Login.vue'
-import Register from './Pages/Auth/Register.vue'
-
-import NotFound from './Pages/NotFound.vue'
+import routes from './routes'
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [
-    {
-      path: '/',
-      component: DashboardLayout,
-      children: [
-        { path: '', name: 'home', component: Dashboard, },
-        { path: '/profile', name: 'profile', component: Profile },
-      ],
-    },
-
-    {
-      path: '/',
-      component: AuthLayout,
-      children: [
-        { path: '/login', name: 'login', component: Login },
-        { path: '/register', name: 'register', component: Register },
-      ],
-    },
-
-    {
-      path: '/:any',
-      component: NotFound,
-    },
-  ],
+  routes,
 })
 
 const url = window.url = (path = '/') => {

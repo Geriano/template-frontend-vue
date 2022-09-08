@@ -18,6 +18,10 @@
   @apply flex items-center bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded-b;
 }
 
+.min-h-content {
+  min-height: calc(100vh - 7rem - 2rem);
+}
+
 .-slide-y-enter-active, .-slide-y-leave-active {
   @apply transition-all duration-300;
 }
