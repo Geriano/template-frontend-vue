@@ -51,7 +51,7 @@ class FormData {
     if (key) {
       this.#data.value[key] = this.#original.value.hasOwnProperty(key) ? this.#original.value[key] : null
     } else {
-      this.#data.value = this.#original.value
+      this.#data.value = cloneDeep(this.#original.value)
     }
   }
 
