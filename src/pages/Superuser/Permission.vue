@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue';
+import Swal from 'sweetalert2'
 import FormData from '../../form';
 import axios from 'axios';
 import Button from '../../Components/Button.vue';
@@ -85,7 +86,15 @@ const submit = () => form.id ? update() : store()
 
 const destroy = async (permission) => {
   try {
-    if (!confirm('are you sure?')) return
+    const { isConfirmed } = await Swal.fire({
+      title: `are you sure want to delete?`,
+      text: `you can't restore it after deleted`,
+      icon: 'question',
+      showCloseButton: true,
+      showCancelButton: true,
+    })
+
+    if (!isConfirmed) return
 
     success(await axios.delete(
       url(`/superuser/permission/${permission.id}`)

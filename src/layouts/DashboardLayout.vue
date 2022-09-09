@@ -205,3 +205,5 @@ onUnmounted(() => document.removeEventListener('keyup', q))
     </div>
   </div>
 </template>
+
+<style src="../sweetalert-dark.css"></style>
