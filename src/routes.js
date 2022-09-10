@@ -3,6 +3,7 @@ import Dashboard from './Pages/Dashboard.vue'
 import Profile from './Pages/Auth/Profile.vue'
 import SuperuserPermission from './Pages/Superuser/Permission.vue'
 import SuperuserRole from './Pages/Superuser/Role.vue'
+import SuperuserUser from './Pages/Superuser/User.vue'
 
 import AuthLayout from './Layouts/AuthLayout.vue'
 import Login from './Pages/Auth/Login.vue'
@@ -17,10 +18,9 @@ export default [
     children: [
       { path: '', name: 'home', component: Dashboard, },
       { path: '/profile', name: 'profile', component: Profile },
-      { path: '/role', name: 'role', component: Profile },
-      { path: '/user', name: 'user', component: Profile },
       { path: '/superuser/permission', name: 'superuser.permission', component: SuperuserPermission },
       { path: '/superuser/role', name: 'superuser.role', component: SuperuserRole },
+      { path: '/superuser/user', name: 'superuser.user', component: SuperuserUser },
     ],
   },
 
