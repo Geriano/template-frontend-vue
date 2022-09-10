@@ -56,8 +56,6 @@ const fetch = async () => {
       if (status !== 422) {
         paginator.value.data = response.data
         paginator.value.meta = response.meta
-
-        console.log(response)
       }
     } catch (e) {
       store.commit('flash', {
