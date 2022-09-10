@@ -3,6 +3,10 @@ import axios from 'axios';
 import { onMounted, Teleport, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { state, store } from './store';
+import sweetalert from './sweetalert-dark.css?url'
+import multiselect from './multiselect-dark.css?url'
+
+console.log(sweetalert, multiselect)
 
 const router = useRouter()
 const ready = ref(false)
@@ -41,6 +45,8 @@ onMounted(async () => {
   <div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-300 w-full h-screen antialiased">
     <Teleport to="head">
       <link rel="stylesheet" href="/vendors/css/icons.css">
+      <link rel="stylesheet" :href="multiselect">
+      <link rel="stylesheet" :href="sweetalert">
     </Teleport>
 
     <Transition

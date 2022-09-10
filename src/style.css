@@ -30,6 +30,22 @@
   @apply opacity-0 -translate-y-full;
 }
 
+.slide-y-enter-active, .slide-y-leave-active {
+  @apply transition-all duration-300;
+}
+
+.slide-y-enter-from, .slide-y-leave-to {
+  @apply opacity-0 translate-y-full;
+}
+
+.flip-enter-active, .flip-leave-active {
+  @apply transition-all duration-300;
+}
+
+.flip-enter-from, .flip-leave-to {
+  @apply opacity-0 -scale-y-100;
+}
+
 .-slide-x-enter-active, .-slide-x-leave-active {
   @apply transition-all duration-300;
 }
@@ -46,6 +62,42 @@
   @apply translate-x-full opacity-0;
 }
 
+.opacity-enter-active, .opacity-leave-active {
+  @apply transition-all duration-300;
+}
+
+.opacity-enter-from, .opacity-leave-to {
+  @apply opacity-0;
+}
+
 .h-content {
   height: calc(100vh - 3.5rem);
+}
+
+table {
+  @apply w-full border-collapse border border-gray-200 dark:border-gray-800;
+}
+
+thead, tfoot, tbody {
+  @apply border;
+}
+
+thead, tfoot {
+  @apply bg-gray-200 dark:bg-gray-800 border-gray-300 dark:border-gray-900 outline-gray-300 dark:outline-gray-900;
+}
+
+tbody {
+  @apply border-gray-200 dark:border-gray-800 outline-gray-200 dark:outline-gray-800;
+}
+
+tr, td, th {
+  @apply border border-inherit bg-inherit outline-inherit;
+}
+
+td {
+  @apply px-2 py-1;
+}
+
+th {
+  @apply outline outline-1 outline-inherit;
 }

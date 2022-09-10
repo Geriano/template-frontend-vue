@@ -172,9 +172,9 @@ onUnmounted(() => document.removeEventListener('keyup', q))
               </Link>
 
               <Link
-                :to="{ name: 'role' }"
+                :to="{ name: 'superuser.role' }"
                 :open="open.sidebar"
-                :active="current.name === 'role'"
+                :active="current.name === 'superuser.role'"
               >
                 <template #icon>
                   <i class="mdi mdi-account-settings" />
@@ -206,4 +206,4 @@ onUnmounted(() => document.removeEventListener('keyup', q))
   </div>
 </template>
 
-<style src="../sweetalert-dark.css"></style>
+<style src="@vueform/multiselect/themes/default.css"></style>
