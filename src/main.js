@@ -11,6 +11,8 @@ const router = createRouter({
   routes,
 })
 
+window.axios = axios
+
 const url = window.url = (path = '/') => {
   return 'http://' + `localhost:3333/${path}`.replace(/(\/+)/g, '/').replace(/(.*?)\/$/g, '$1')
 }

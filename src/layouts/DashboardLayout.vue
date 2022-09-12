@@ -154,6 +154,7 @@ onUnmounted(() => document.removeEventListener('keyup', q))
               'superuser.permission',
               'superuser.role',
               'superuser.user',
+              'superuser.menu',
             ].includes(current.name)"
             text="builtin"
           >
@@ -201,6 +202,20 @@ onUnmounted(() => document.removeEventListener('keyup', q))
 
                 <template #body>
                   user
+                </template>
+              </Link>
+
+              <Link
+                :to="{ name: 'superuser.menu' }"
+                :open="open.sidebar"
+                :active="current.name === 'superuser.menu'"
+              >
+                <template #icon>
+                  <i class="mdi mdi-menu" />
+                </template>
+
+                <template #body>
+                  menu
                 </template>
               </Link>
             </template>
