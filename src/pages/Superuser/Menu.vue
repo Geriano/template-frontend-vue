@@ -152,6 +152,11 @@ const change = () => {
     try {
       const { data: response } = await axios.patch(url('/superuser/menu/save'), { menus: menus.value })
       menus.value = response
+
+      Store.commit('flash', {
+        type: `success`,
+        message: 'menu position has been updated',
+      })
     } catch (e) {
       Store.commit('flash', {
         type: 'error',
