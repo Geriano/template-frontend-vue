@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router"
 import Link from './Link.vue'
 
-const { active } = defineProps(['open', 'active', 'text'])
+const { active } = defineProps(['open', 'menu'])
 
 const router = useRouter()
 const current = router.currentRoute
@@ -23,13 +23,13 @@ const show = ref(active || false)
         }"
       >
         <div class="flex-none">
-          <slot name="icon" />
+          <i :class="menu.icon" />
         </div>
         
         <TransitionGroup name="-slide-x">
           <template v-if="open">
             <div class="uppercase font-semibold w-full text-left">
-              {{ text }}
+              {{ menu.name }}
             </div>
 
             <i class="flex-none text-xl mdi mdi-menu-down transition-all" :class="!show && 'rotate-90'"></i>
@@ -40,7 +40,7 @@ const show = ref(active || false)
 
     <Transition name="-slide-x">
       <div v-if="show && open" class="flex flex-col space-y-2 pl-6">
-        <slot name="childs" />
+        <slot />
       </div>
     </Transition>
   </div>

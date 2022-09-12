@@ -1,10 +1,10 @@
 <script setup>
-defineProps(['open', 'active', 'to'])
+defineProps(['open', 'menu'])
 </script>
 
 <template>
   <div>
-    <RouterLink :to="to" class="w-full">
+    <RouterLink :to="{ name: menu.route_or_url }" class="w-full">
       <div
         class="flex items-center space-x-2 hover:bg-gray-700 px-4 py-2 transition-all duration-300 text-gray-100"
         :class="{
@@ -14,12 +14,12 @@ defineProps(['open', 'active', 'to'])
         }"
       >
         <div class="flex-none">
-          <slot name="icon" />
+          <i :class="menu.icon" />
         </div>
         
         <Transition name="-slide-x">
           <div v-if="open" class="uppercase font-semibold">
-            <slot name="body" />
+            {{ menu.name }}
           </div>
         </Transition>
       </div>

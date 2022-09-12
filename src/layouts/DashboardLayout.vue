@@ -3,8 +3,7 @@ import axios from 'axios';
 import { ref, watch, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { store, state } from '../store';
-import Link from '../Components/Sidebar/Link.vue';
-import Links from '../Components/Sidebar/Links.vue';
+import Menu from '../Components/Sidebar/Menu.vue';
 
 const { user } = defineProps(['user'])
 
@@ -15,6 +14,7 @@ const open = ref({
   )),
   dropdown: false,
 })
+const menus = ref([])
 
 const router = useRouter()
 
@@ -43,9 +43,22 @@ const logout = async () => {
 
 const current = useRouter().currentRoute
 
+const getSidebarMenus = async () => {
+  try {
+    const { data: response } = await axios.get(url(`/superuser/menu`))
+    menus.value = response
+  } catch (e) {
+    store.commit('flash', {
+      type: 'error',
+      message: `${e}`,
+    })
+  }
+}
+
 onMounted(async () => {
   await router.isReady()
   state.user.id || router.push({ name: 'login' })
+  await getSidebarMenus()
   ready.value = true
 })
 
@@ -75,7 +88,7 @@ onUnmounted(() => document.removeEventListener('keyup', q))
         <i @click.prevent="open.dropdown = ! open.dropdown" :class="{ 'text-white -rotate-90': open.dropdown, 'text-gray-100': !open.dropdown }" class="mdi mdi-arrow-left-drop-circle text-2xl transition-all duration-[400ms] cursor-pointer"></i>
 
         <Transition name="slide-x">
-          <div v-if="open.dropdown" @click.prevent="open.dropdown = false" class="absolute top-10 right-0 w-52 flex flex-col space-y-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow z-20">
+          <div v-if="open.dropdown" @click.prevent="open.dropdown = false" class="absolute top-10 right-0 w-52 flex flex-col space-y-1 bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-700 rounded-md shadow z-40">
             <div class="border-b border-gray-100 dark:border-gray-500 mx-2 mt-2"></div>
             <RouterLink :to="{ name: 'profile' }" class="flex items-center space-x-1 px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-gray-100 rounded transition-all">
               <i class="mdi mdi-face-man"></i> <div class="lowercase first-letter:capitalize font-semibold">profile</div>
@@ -114,7 +127,7 @@ onUnmounted(() => document.removeEventListener('keyup', q))
         'w-96 md:w-64': open.sidebar,
         'w-14': !open.sidebar,
       }"
-      class="absolute top-0 left-0 h-screen max-h-screen overflow-y-auto bg-gray-600 transition-all duration-300"
+      class="absolute top-0 left-0 h-screen max-h-screen overflow-y-auto bg-gray-600 transition-all duration-300 z-30"
     >
       <div class="flex flex-col items-center">
         <div :class="{ 'bg-teal-600': open.sidebar, 'bg-teal-500': !open.sidebar }" class="flex items-center space-x-2 w-full h-14 p-2 transition-all">
@@ -133,7 +146,9 @@ onUnmounted(() => document.removeEventListener('keyup', q))
           </TransitionGroup>
         </div>
 
-        <div class="flex flex-col w-full h-content overflow-y-auto" :class="open.sidebar && 'p-2 space-y-2'">
+        <Menu :open="open.sidebar" :menus="menus" class="h-content" />
+
+        <div v-if="false" class="flex flex-col w-full h-content overflow-y-auto" :class="open.sidebar && 'p-2 space-y-2'">
           <Link
             :to="{ name: 'home' }"
             :open="open.sidebar"

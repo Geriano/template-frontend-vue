@@ -1,21 +1,33 @@
-<script setup>
-import axios from 'axios';
-import { ref, onMounted } from 'vue';
-import store from '../../store';
+<script>
+import { defineComponent, h } from 'vue';
+import Link from './Link.vue';
+import Links from './Links.vue';
 
-const menus = ref([])
+export default defineComponent({
+  props: {
+    menus: Array,
+    open: Boolean,
+  },
 
-const fetch = async () => {
-  try {
-    const { data: response } = await axios.get(url(`/superuser/menu`))
-    menus.value = response
-  } catch (e) {
-    store.commit('flash', {
-      type: 'error',
-      message: `${e}`,
-    })
-  }
-}
+  setup() {
+    return props => {
+      const { menus, open } = props
 
-onMounted(fetch)
+      const generate = (menu) => {
+        if (menu.childs?.length) {
+          return h(Links, {
+            menu,
+            open,
+          }, menu.childs.map(child => generate(child)))
+        }
+
+        return h(Link, { menu, open })
+      }
+      
+      return h('div', {
+        class: 'flex flex-col space-y-1 w-full h-content',
+      }, menus.map(menu => generate(menu)))
+    }
+  },
+})
 </script>
