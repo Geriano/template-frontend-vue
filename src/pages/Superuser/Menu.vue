@@ -35,6 +35,21 @@ const flatMap = route => {
 
 const routes = Routes.flatMap(flatMap).filter(route => route)
 
+const permissions = ref([])
+const getAvailablePermissions = async () => {
+  try {
+    const { data: response } = await axios.get(url(`/superuser/permission`))
+    permissions.value = response
+  } catch (e) {
+    Store.commit('flash', {
+      type: 'error',
+      message: `${e}`,
+    })
+  }
+}
+
+onMounted(getAvailablePermissions)
+
 const search = ref('')
 const type = ref('mdi')
 const menus = ref([])
@@ -45,6 +60,7 @@ const form = new FormData({
   icon: 'mdi mdi-circle',
   route_or_url: '',
   actives: [],
+  permissions: [],
 })
 
 const edit = menu => {
@@ -53,6 +69,7 @@ const edit = menu => {
   form.icon = menu.icon
   form.route_or_url = menu.route_or_url
   form.actives = menu.actives || []
+  form.permissions = menu.permissions.map(p => p.id)
 
   open.value.form = true
 }
@@ -265,6 +282,30 @@ const change = () => {
               </div>
 
               <InputError :error="form.errors.actives" />
+            </div>
+
+            <div class="flex flex-col space-y-1">
+              <div class="flex items-center space-x-2">
+                <label for="permissions" class="flex-none w-1/4 lowercase first-letter:capitalize font-semibold">
+                  permissions
+                </label>
+
+                <Select
+                  v-model="form.permissions"
+                  :options="permissions.map(p => ({
+                    label: p.name,
+                    value: p.id,
+                  }))"
+                  :searchable="true"
+                  :closeOnSelect="false"
+                  :clearOnSelect="false"
+                  placeholder="permissions"
+                  class="uppercase"
+                  mode="tags"
+                />
+              </div>
+
+              <InputError :error="form.errors.permissions" />
             </div>
 
             <div class="flex items-center space-x-2 justify-between">
