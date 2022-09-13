@@ -6,8 +6,6 @@ import { state, store } from './store';
 import sweetalert from './sweetalert-dark.css?url'
 import multiselect from './multiselect-dark.css?url'
 
-console.log(sweetalert, multiselect)
-
 const router = useRouter()
 const ready = ref(false)
 
