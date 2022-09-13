@@ -1,5 +1,5 @@
 <script setup>
-defineProps(['open', 'menu'])
+const { open, menu, active } = defineProps(['open', 'menu', 'active'])
 </script>
 
 <template>

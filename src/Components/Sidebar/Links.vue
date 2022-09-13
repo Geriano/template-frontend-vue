@@ -1,14 +1,10 @@
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router"
 import Link from './Link.vue'
 
-const { active } = defineProps(['open', 'menu'])
+const { active, open, menu } = defineProps(['open', 'menu', 'active'])
 
-const router = useRouter()
-const current = router.currentRoute
-
-const show = ref(active || false)
+const show = ref(open && active)
 </script>
 
 <template>
@@ -39,7 +35,7 @@ const show = ref(active || false)
     </button>
 
     <Transition name="-slide-x">
-      <div v-if="show && open" class="flex flex-col space-y-2 pl-6">
+      <div v-if="show && open" @click.prevent="click" class="flex flex-col space-y-2 pl-6">
         <slot />
       </div>
     </Transition>

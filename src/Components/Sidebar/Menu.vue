@@ -1,5 +1,6 @@
 <script>
 import { defineComponent, h } from 'vue';
+import { useRoute } from 'vue-router';
 import Link from './Link.vue';
 import Links from './Links.vue';
 
@@ -12,16 +13,34 @@ export default defineComponent({
   setup() {
     return props => {
       const { menus, open } = props
+      const route = useRoute()
+
+      const trace = menu => {
+        if (menu.childs?.length) {
+          for (let child of menu.childs) {
+            if (trace(child)) {
+              return true
+            }
+          }
+        }
+
+        return [menu.route_or_url, ...(menu.actives || [])].includes(route.name)
+      }
 
       const generate = (menu) => {
         if (menu.childs?.length) {
           return h(Links, {
             menu,
             open,
+            active: trace(menu),
           }, menu.childs.map(child => generate(child)))
         }
 
-        return h(Link, { menu, open })
+        return h(Link, {
+          menu,
+          open,
+          active: [menu.route_or_url, ...(menu.actives || [])].includes(route.name),
+        })
       }
       
       return h('div', {
