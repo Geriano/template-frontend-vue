@@ -231,7 +231,7 @@ const submitSecurityForm = async () => {
                     class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.current_password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
-                    <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
+                    <i :class="{ 'mdi-eye-off-outline': hidden, 'mdi-eye-outline text-white rotate-180': !hidden }" class="mdi text-xl transition-all duration-500"></i>
                   </div>
                   <Input
                     v-model="security.current_password"
@@ -266,7 +266,7 @@ const submitSecurityForm = async () => {
                     class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
-                    <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
+                    <i :class="{ 'mdi-eye-off-outline': hidden, 'mdi-eye-outline text-white rotate-180': !hidden }" class="mdi text-xl transition-all duration-500"></i>
                   </div>
                   <Input
                     v-model="security.password"
@@ -301,7 +301,7 @@ const submitSecurityForm = async () => {
                     class="absolute top-0 left-0 h-full flex items-center bg-gray-200 dark:bg-gray-600 rounded-l px-2 cursor-pointer"
                     :class="{ 'bg-red-500 dark:bg-red-500': security.errors.password_confirmation, 'bg-orange-500 dark:bg-orange-500': !hidden }"
                   >
-                  <i :class="!hidden && 'rotate-180 text-white'" class="mdi mdi-form-textbox-password text-xl transition-all duration-500"></i>
+                    <i :class="{ 'mdi-eye-off-outline': hidden, 'mdi-eye-outline text-white rotate-180': !hidden }" class="mdi text-xl transition-all duration-500"></i>
                   </div>
                   <Input
                     v-model="security.password_confirmation"

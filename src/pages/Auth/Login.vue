@@ -104,7 +104,7 @@ const submit = async () => {
                   'bg-orange-500 dark:bg-orange-500': !hidden,
                 }"
               >
-                <i class="mdi mdi-form-textbox-password text-xl transition-all duration-300" :class="!hidden && 'rotate-180'"></i>
+                <i class="mdi text-xl transition-all duration-300" :class="{ 'mdi-eye-outline': hidden, 'mdi-eye-off-outline rotate-180 text-white': !hidden }"></i>
               </div>
               <input
                 v-model="form.password"
