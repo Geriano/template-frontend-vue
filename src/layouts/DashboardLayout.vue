@@ -45,7 +45,7 @@ const current = useRouter().currentRoute
 
 const getSidebarMenus = async () => {
   try {
-    const { data: response } = await axios.get(url(`/superuser/menu`))
+    const { data: response } = await axios.get(url(`/menu`))
     menus.value = response
   } catch (e) {
     store.commit('flash', {
