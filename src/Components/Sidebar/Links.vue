@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Link from './Link.vue'
 
-const { active, open, menu } = defineProps(['open', 'menu', 'active'])
+const { active, open, menu, pl } = defineProps(['open', 'menu', 'active', 'pl'])
 
 const show = ref(open && active)
 </script>
@@ -16,6 +16,12 @@ const show = ref(open && active)
           'justify-center': !open,
           'rounded': open,
           'bg-gray-700': show && open,
+          'px-4': !pl,
+          'pl-8 pr-4': pl === 1,
+          'pl-16 pr-4': pl === 2,
+          'pl-20 pr-4': pl === 3,
+          'pl-28 pr-4': pl === 4,
+          'pl-36 pr-4': pl === 5,
         }"
       >
         <div class="flex-none">
@@ -35,7 +41,7 @@ const show = ref(open && active)
     </button>
 
     <Transition name="-slide-x">
-      <div v-if="show && open" @click.prevent="click" class="flex flex-col space-y-2 pl-6">
+      <div v-if="show && open" @click.prevent="click" class="flex flex-col space-y-2">
         <slot />
       </div>
     </Transition>
