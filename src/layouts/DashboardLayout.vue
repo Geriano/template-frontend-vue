@@ -6,7 +6,7 @@ import { store, state } from '../store';
 import Menu from '../Components/Sidebar/Menu.vue';
 
 const { user } = defineProps(['user'])
-
+const APP_NAME = import.meta.env.VITE_APP_NAME
 const ready = ref(false)
 const open = ref({
   sidebar: Boolean(Number(
@@ -80,7 +80,7 @@ onUnmounted(() => document.removeEventListener('keyup', q))
 
       <Transition name="-slide-y">
         <div v-if="!open.sidebar" class="flex items-center justify-center">
-          <h1 class="text-2xl text-white font-bold">Template</h1>
+          <h1 class="text-2xl text-white font-bold">{{ APP_NAME }}</h1>
         </div>
       </Transition>
 
@@ -127,20 +127,24 @@ onUnmounted(() => document.removeEventListener('keyup', q))
         'w-96 md:w-64': open.sidebar,
         'w-14': !open.sidebar,
       }"
-      class="absolute top-0 left-0 h-screen max-h-screen overflow-y-auto bg-gray-600 transition-all duration-300 z-30"
+      class="absolute top-0 left-0 h-screen max-h-screen overflow-y-auto bg-gray-600 transition-all duration-300 z-30 max-w-[100vw]"
     >
       <div class="flex flex-col items-center">
-        <div :class="{ 'bg-teal-600': open.sidebar, 'bg-teal-500': !open.sidebar }" class="flex items-center space-x-2 w-full h-14 p-2 transition-all">
+        <div :class="{ 'bg-teal-600': open.sidebar, 'bg-teal-500': !open.sidebar }" class="flex items-center space-x-2 w-full h-14 p-2 transition-all justify-between">
           <TransitionGroup name="-slide-x">
             <button v-if="!open.sidebar" @click.prevent="open.sidebar = ! open.sidebar" class="px-1 rounded-md mx-auto">
               <i class="mdi mdi-menu text-white text-xl"></i>
             </button>
+
+            <button v-if="open.sidebar" class="flex-none px-1 rounded-md mx-auto opacity-0">
+              <i class="mdi mdi-menu text-white text-xl"></i>
+            </button>
           
             <div v-if="open.sidebar" class="flex items-center justify-center w-full">
-              <p class="text-2xl text-center text-white font-bold">Template</p>
+              <p class="text-2xl text-center text-white font-bold">{{ APP_NAME }}</p>
             </div>
 
-            <button v-if="open.sidebar" @click.prevent="open.sidebar = ! open.sidebar" class="px-1 rounded-md mx-auto">
+            <button v-if="open.sidebar" @click.prevent="open.sidebar = ! open.sidebar" class="flex-none px-1 rounded-md mx-auto">
               <i class="mdi mdi-menu text-white text-xl"></i>
             </button>
           </TransitionGroup>

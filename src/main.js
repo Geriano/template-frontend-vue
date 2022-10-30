@@ -14,7 +14,10 @@ const router = createRouter({
 window.axios = axios
 
 const url = window.url = (path = '/') => {
-  return 'http://' + `localhost:3333/${path}`.replace(/(\/+)/g, '/').replace(/(.*?)\/$/g, '$1')
+  const SCHEME = import.meta.env.VITE_BACKEND_SCHEME || 'http'
+  const HOST = import.meta.env.VITE_BACKEND_HOST || 'localhost'
+  const PORT = import.meta.env.VITE_BACKEND_PORT || 3333
+  return `${SCHEME}://` + `${HOST}:${PORT}/${path}`.replace(/(\/+)/g, '/').replace(/(.*?)\/$/g, '$1')
 }
 
 window.router = () => router
