@@ -1,12 +1,13 @@
 <script setup>
 import axios from 'axios';
 import { onMounted, Teleport, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { state, store } from './store';
 import sweetalert from './sweetalert-dark.css?url'
 import multiselect from './multiselect-dark.css?url'
 
 const router = useRouter()
+const route = useRoute()
 const ready = ref(false)
 
 onMounted(async () => {
@@ -22,7 +23,12 @@ onMounted(async () => {
 
     if (expired) {
       store.commit('logout')
-      return router.push({ name: 'login' })
+
+      if (route.name !== 'login') {
+        router.push({ name: 'login' })
+      }
+      
+      return
     }
 
     try {
@@ -31,7 +37,10 @@ onMounted(async () => {
       store.commit('login', user)
     } catch (e) {
       store.commit('logout')
-      router.push({ name: 'login' })
+      
+      if (route.name !== 'login') {
+        router.push({ name: 'login' })
+      }
     }
   }
 
