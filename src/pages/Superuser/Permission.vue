@@ -136,18 +136,18 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
     <template #body>
       <div class="flex-wrap p-4 min-h-content">
         <TransitionGroup name="-slide-y">
-          <Button v-for="(permission, i) in permissions.filter(p => p.name.toLowerCase().includes(search.trim().toLocaleLowerCase()))" :key="i" class="bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-800 w-fit m-[1px] rounded leading-tight text-sm cursor-default">
+          <Button v-for="(permission, i) in permissions.filter(p => p.name.toLowerCase().includes(search.trim().toLocaleLowerCase()))" :key="i" class="bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-800 w-fit m-[1px] rounded leading-tight text-sm cursor-default">
             <div class="flex items-center space-x-2">
               <p class="uppercase font-semibold">
                 {{ permission.name }}
               </p>
 
-              <div class="flex-none flex items-center">
-                <BtnBlue @click.prevent="edit(permission)" class="rounded-r-none px-2 py-1">
+              <div class="flex-none flex items-center border border-gray-100 dark:border-gray-600 rounded-md">
+                <BtnBlue @click.prevent="edit(permission)" class="rounded-r-none px-2 py-0">
                   <i class="mdi mdi-pen" />
                 </BtnBlue>
 
-                <BtnRed @click.prevent="destroy(permission)" class="rounded-l-none px-2 py-1">
+                <BtnRed @click.prevent="destroy(permission)" class="rounded-l-none px-2 py-0">
                   <i class="mdi mdi-delete" />
                 </BtnRed>
               </div>
