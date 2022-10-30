@@ -63,7 +63,7 @@ onMounted(async () => {
 })
 
 const q = e => {
-  if (e.key === 'q' && !(e.target instanceof HTMLInputElement)) {
+  if (e.key === 'q' && !(e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target.hasAttribute('contenteditable'))) {
     e.preventDefault()
     open.value.sidebar = ! open.value.sidebar
   }
