@@ -15,9 +15,9 @@ window.axios = axios
 
 const url = window.url = (path = '/') => {
   const SCHEME = import.meta.env.VITE_BACKEND_SCHEME || 'http'
-  const HOST = import.meta.env.VITE_BACKEND_HOST || 'localhost'
-  const PORT = import.meta.env.VITE_BACKEND_PORT || 3333
-  return `${SCHEME}://` + `${HOST}:${PORT}/${path}`.replace(/(\/+)/g, '/').replace(/(.*?)\/$/g, '$1')
+  const HOST = import.meta.env.VITE_BACKEND_HOST || 'localhost:8000'
+  
+  return `${SCHEME}://` + `${HOST}/${path}`.replace(/(\/+)/g, '/').replace(/(.*?)\/$/g, '$1')
 }
 
 window.router = () => router
