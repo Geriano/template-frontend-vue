@@ -49,7 +49,7 @@ export default defineComponent({
       }
       
       return h('div', {
-        class: 'flex flex-col space-y-1 w-full h-content px-2',
+        class: 'flex flex-col space-y-1 w-full h-content ' + (open ? 'px-2' : ''),
       }, menus.map(menu => generate(menu)))
     }
   },

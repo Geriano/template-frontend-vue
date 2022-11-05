@@ -49,7 +49,7 @@ const submit = async () => {
 </script>
 
 <template>
-  <div class="flex flex-col lg:flex-row items-center justify-around w-full h-full p-4 bg-gray-50 dark:bg-gray-800 rounded-md">
+  <div class="flex flex-col lg:flex-row items-center justify-around w-full h-full p-4 bg-gray-50 dark:bg-gray-800 rounded">
     <div class="hidden lg:block lg:w-1/3">
       <h1 class="text-5xl font-bold text-gray-800 dark:text-gray-100 lowercase first-letter:capitalize">
         coding every time, every where
@@ -57,7 +57,7 @@ const submit = async () => {
     </div>
 
     <div class="w-full max-w-xl lg:max-w-md">
-      <form @submit.prevent="submit" class="flex flex-col space-y-2 w-full bg-white dark:bg-gray-700 rounded-md border-l-8 border-teal-500 border-solid shadow-md">
+      <form @submit.prevent="submit" class="flex flex-col space-y-2 w-full bg-white dark:bg-gray-700 rounded border-l-8 border-teal-500 border-solid shadow-md">
         <div class="flex flex-col space-y-2 px-6 py-4">
           <label for="username" class="lowercase first-letter:capitalize font-semibold">
             username
@@ -149,7 +149,7 @@ const submit = async () => {
                 }"
                 class="mdi transition-all"
               />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 login
               </p>
             </div>

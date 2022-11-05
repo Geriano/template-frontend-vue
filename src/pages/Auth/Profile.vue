@@ -201,7 +201,7 @@ const submitSecurityForm = async () => {
                 }"
                 class="mdi transition-all"
               />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 update
               </p>
             </Button>
@@ -343,7 +343,7 @@ const submitSecurityForm = async () => {
                 }"
                 class="mdi transition-all"
               />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 update
               </p>
             </Button>

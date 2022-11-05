@@ -99,5 +99,13 @@ td {
 }
 
 th {
-  @apply outline outline-1 outline-inherit;
+  @apply outline outline-1 outline-inherit text-[14px];
+}
+
+option {
+  @apply bg-white text-gray-700;
+}
+
+label {
+  @apply text-sm;
 }

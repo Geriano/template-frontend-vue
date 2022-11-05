@@ -10,6 +10,7 @@ import Card from '../../Components/Card.vue';
 import Modal from '../../Components/Modal.vue';
 import Input from '../../Components/Input.vue';
 import InputError from '../../Components/InputError.vue';
+import Close from '../../Components/Button/Close.vue';
 import BtnGreen from '../../Components/Button/Green.vue';
 import BtnBlue from '../../Components/Button/Blue.vue';
 import BtnRed from '../../Components/Button/Red.vue';
@@ -117,18 +118,31 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
 <template>
   <Card>
     <template #header>
-      <div class="flex items-center justify-between w-full">
-        <BtnGreen @click.prevent="form.reset(); open = ! open" class="text-sm">
-          <i class="text-md mdi mdi-plus" />
-          <p class="uppercase font-semibold">
-            create
-          </p>
-        </BtnGreen>
+      <div class="flex items-center space-x-2 justify-between w-full">
+        <div class="flex items-center justify-between w-full">
+          <BtnGreen @click.prevent="form.reset(); open = ! open" class="text-sm">
+            <i class="text-md mdi mdi-plus" />
+            <p class="capitalize font-semibold">
+              create
+            </p>
+          </BtnGreen>
+
+          <select 
+            @change.prevent="table.limit($event.target.value)"
+            class="dark:bg-gray-700 border border-gray-100 dark:border-gray-600 px-3 py-2 text-xs rounded"
+          >
+            <option value="2">2</option>
+            <option value="15" selected>15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
 
         <Input
           @input.prevent="table.search($event.target.value)"
           type="search"
-          class="max-w-xs"
+          class="max-w-xs dark:bg-gray-700 dark:border-gray-600 py-1"
           placeholder="search something"
           autofocus
         />
@@ -140,6 +154,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
         <Table
           :url="url('/superuser/role/paginate')"
           :element="{
+            limit: false,
             search: false,
           }"
           ref="table"
@@ -165,7 +180,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
           <template #tbody="{ data }">
             <template v-for="(role, i) in data" :key="i">
               <tr>
-                <td class="whitespace-nowrap">
+                <td class="whitespace-nowrap text-center">
                   {{ i + 1 }}
                 </td>
 
@@ -179,7 +194,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
                       v-for="(permission, j) in role.permissions" :key="j"
                       class="bg-gray-200 dark:bg-gray-800 cursor-default m-[1px]"
                     >
-                      <p class="uppercase font-semibold">
+                      <p class="capitalize font-semibold">
                         {{ permission.name }}
                       </p>
                     </Button>
@@ -190,14 +205,14 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
                   <div class="flex items-center space-x-1">
                     <BtnBlue @click.prevent="edit(role)">
                       <i class="mdi mdi-pen" />
-                      <p class="uppercase font-semibold">
+                      <p class="capitalize font-semibold">
                         edit
                       </p>
                     </BtnBlue>
 
                     <BtnRed @click.prevent="destroy(role)">
                       <i class="mdi mdi-delete" />
-                      <p class="uppercase font-semibold">
+                      <p class="capitalize font-semibold">
                         delete
                       </p>
                     </BtnRed>
@@ -216,7 +231,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
       <Card>
         <template #header>
           <div class="flex items-center space-x-1 justify-end w-full">
-            <i @click.prevent="open = false" class="mdi mdi-close rounded bg-red-500 px-1 cursor-pointer" />
+            <Close @click.prevent="open = false" />
           </div>
         </template>
 
@@ -232,7 +247,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
                   v-model="form.name"
                   type="text"
                   placeholder="name"
-                  class="uppercase"
+                  class="uppercase py-[.45rem]"
                   required
                   autofocus
                 />
@@ -264,14 +279,14 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
           </div>
         </template>
 
-        <template #footer-sticky>
+        <template #footer>
           <div class="flex items-center space-x-1 justify-end w-full">
             <BtnGreen
               :disabled="form.processing"
               type="submit"
             >
               <i class="mdi mdi-check" />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 {{ form.id ? 'update' : 'create' }}
               </p>
             </BtnGreen>

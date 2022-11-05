@@ -49,7 +49,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-gray-100 dark:bg-gray-900 dark:text-gray-300 w-full h-screen antialiased">
+  <div class="h-screen antialiased">
     <Teleport to="head">
       <link rel="stylesheet" href="/vendors/css/icons.css">
       <link rel="stylesheet" :href="multiselect">
@@ -84,7 +84,7 @@ onMounted(async () => {
                 'border-cyan-500': f.type === 'info',
                 'border-orange-500': f.type === 'warning',
               }"
-              class="flex items-center space-x-2 p-2 rounded border-l-8 border-solid bg-white dark:bg-gray-800 shadow-lg"
+              class="flex items-center space-x-2 p-2 rounded border-l-8 border-solid bg-white dark:bg-gray-800 dark:text-gray-200 shadow-lg"
             >
               <div class="w-full">
                 <p class="lowercase first-letter:capitalize">
@@ -94,7 +94,7 @@ onMounted(async () => {
 
               <i
                 @click.prevent="delete(state.flash[i])"
-                class="bx bx-x flex-none bg-red-500 text-white rounded-md p-1 cursor-pointer"
+                class="bx bx-x flex-none bg-red-500 text-white rounded p-1 cursor-pointer"
               />
             </div>
           </TransitionGroup>

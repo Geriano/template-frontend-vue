@@ -4,6 +4,7 @@ import Swal from 'sweetalert2'
 import FormData from '../../form';
 import axios from 'axios';
 import Button from '../../Components/Button.vue';
+import Close from '../../Components/Button/Close.vue';
 import Card from '../../Components/Card.vue';
 import Modal from '../../Components/Modal.vue';
 import Input from '../../Components/Input.vue';
@@ -116,9 +117,9 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
   <Card>
     <template #header>
       <div class="flex items-center justify-between w-full">
-        <BtnGreen @click.prevent="form.reset(); open = ! open" class="text-sm">
+        <BtnGreen @click.prevent="form.reset(); open = ! open">
           <i class="text-md mdi mdi-plus" />
-          <p class="uppercase font-semibold">
+          <p class="capitalize font-semibold">
             create
           </p>
         </BtnGreen>
@@ -126,7 +127,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
         <Input
           v-model="search"
           type="search"
-          class="max-w-xs"
+          class="max-w-xs dark:bg-gray-700 dark:border-gray-600 py-1"
           placeholder="search something"
           autofocus
         />
@@ -138,11 +139,11 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
         <TransitionGroup name="-slide-y">
           <Button v-for="(permission, i) in permissions.filter(p => p.name.toLowerCase().includes(search.trim().toLocaleLowerCase()))" :key="i" class="bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-800 w-fit m-[1px] rounded leading-tight text-sm cursor-default">
             <div class="flex items-center space-x-2">
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 {{ permission.name }}
               </p>
 
-              <div class="flex-none flex items-center border border-gray-100 dark:border-gray-600 rounded-md">
+              <div class="flex-none flex items-center border border-gray-100 dark:border-gray-600 rounded">
                 <BtnBlue @click.prevent="edit(permission)" class="rounded-r-none px-2 py-0">
                   <i class="mdi mdi-pen" />
                 </BtnBlue>
@@ -163,7 +164,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
       <Card>
         <template #header>
           <div class="flex items-center space-x-1 justify-end w-full">
-            <i @click.prevent="open = false" class="mdi mdi-close rounded bg-red-500 px-1 cursor-pointer" />
+            <Close @click.prevent="open = false" />
           </div>
         </template>
 
@@ -173,7 +174,7 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
               v-model="form.name"
               type="text"
               placeholder="name"
-              class="uppercase"
+              class="uppercase py-1"
               required
               autofocus
             />
@@ -182,14 +183,14 @@ onUnmounted(() => document.removeEventListener('keydown', esc))
           </div>
         </template>
 
-        <template #footer-sticky>
+        <template #footer>
           <div class="flex items-center space-x-1 justify-end w-full">
             <BtnGreen
               :disabled="form.processing"
               type="submit"
             >
               <i class="mdi mdi-check" />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 {{ form.id ? 'update' : 'create' }}
               </p>
             </BtnGreen>

@@ -1,19 +1,15 @@
 <template>
   <div class="card w-full h-fit">
-    <div class="sticky top-0 left-0 z-10" :class="$slots.header && 'header'">
+    <div v-if="$slots.header" class="header">
       <slot name="header" />
     </div>
 
-    <div>
+    <div class="h-full">
       <slot name="body" />
     </div>
 
-    <div :class="$slots.footer && 'footer'">
+    <div v-if="$slots.footer" class="footer">
       <slot name="footer" />
-    </div>
-
-    <div class="sticky bottom-0 left-0 z-10" :class="$slots['footer-sticky'] && 'footer'">
-      <slot name="footer-sticky" />
     </div>
   </div>
 </template>

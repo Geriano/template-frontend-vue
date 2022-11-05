@@ -8,6 +8,7 @@ import Card from '../../Components/Card.vue';
 import Modal from '../../Components/Modal.vue';
 import Input from '../../Components/Input.vue';
 import InputError from '../../Components/InputError.vue';
+import Close from '../../Components/Button/Close.vue';
 import BtnGreen from '../../Components/Button/Green.vue';
 import BtnBlue from '../../Components/Button/Blue.vue';
 import BtnRed from '../../Components/Button/Red.vue';
@@ -192,7 +193,7 @@ const change = () => {
       <div class="flex items-center justify-between w-full">
         <BtnGreen @click.prevent="form.reset(); open.form = ! open.form" class="text-sm">
           <i class="text-md mdi mdi-plus" />
-          <p class="uppercase font-semibold">
+          <p class="capitalize font-semibold">
             create
           </p>
         </BtnGreen>
@@ -217,7 +218,7 @@ const change = () => {
       <Card>
         <template #header>
           <div class="flex items-center space-x-1 justify-end w-full">
-            <i @click.prevent="open.form = false" class="mdi mdi-close rounded bg-red-500 px-1 cursor-pointer" />
+            <Close @click.prevent="open.form = false" />
           </div>
         </template>
 
@@ -233,7 +234,7 @@ const change = () => {
                   v-model="form.name"
                   type="text"
                   placeholder="name"
-                  class="uppercase"
+                  class="uppercase py-[.45rem]"
                   required
                   autofocus
                 />
@@ -250,12 +251,11 @@ const change = () => {
 
                 <Select
                   v-model="form.route_or_url"
-                  :options="routes"
+                  :options="routes.includes(form.route_or_url) ? routes : routes.concat(form.route_or_url)"
                   :searchable="true"
                   :createOption="true"
                   placeholder="route or url"
-                  class="uppercase"
-                  required
+                  class="uppercase py-[.45rem]"
                 />
               </div>
 
@@ -276,7 +276,7 @@ const change = () => {
                   :clearOnSelect="false"
                   :createTag="true"
                   placeholder="actives"
-                  class="uppercase"
+                  class="uppercase py-[.45rem]"
                   mode="tags"
                 />
               </div>
@@ -300,7 +300,7 @@ const change = () => {
                   :closeOnSelect="false"
                   :clearOnSelect="false"
                   placeholder="permissions"
-                  class="uppercase"
+                  class="uppercase py-[.45rem]"
                   mode="tags"
                 />
               </div>
@@ -315,8 +315,8 @@ const change = () => {
                 {{ form.icon }}
               </p>
 
-              <BtnBlue @click.prevent="open.icon = true" type="buttonnpx vite ">
-                <p class="uppercase font-semibold">
+              <BtnBlue @click.prevent="open.icon = true" type="button">
+                <p class="capitalize font-semibold">
                   change
                 </p>
               </BtnBlue>
@@ -324,14 +324,14 @@ const change = () => {
           </div>
         </template>
 
-        <template #footer-sticky>
+        <template #footer>
           <div class="flex items-center space-x-1 justify-end w-full">
             <BtnGreen
               :disabled="form.processing"
               type="submit"
             >
               <i class="mdi mdi-check" />
-              <p class="uppercase font-semibold">
+              <p class="capitalize font-semibold">
                 {{ form.id ? 'update' : 'create' }}
               </p>
             </BtnGreen>
@@ -374,7 +374,7 @@ const change = () => {
               </template>
             </div>
 
-            <i @click.prevent="open.icon = false" class="mdi mdi-close rounded bg-red-500 px-1 cursor-pointer" />
+            <Close @click.prevent="open.icon = false" />
           </div>
         </div>
       </template>

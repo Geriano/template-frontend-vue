@@ -160,7 +160,7 @@ defineExpose(all)
 
     <div class="flex space-x-2">
       <div class="w-full">
-        <h3 class="lowercase first-letter:capitalize">
+        <h3 class="lowercase first-letter:capitalize text-sm">
           displaying {{ paginator.data.length }} data from total {{ paginator.meta.total }}
         </h3>
       </div>
@@ -172,13 +172,13 @@ defineExpose(all)
           class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-r-none"
         >
           <i class="bx bx-caret-left"></i>
-          <p class="uppercase font-semibold">
+          <p class="capitalize font-semibold">
             previous
           </p>
         </Button>
 
         <Button class="bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-900 rounded-none">
-          <p class="uppercase font-semibold">
+          <p class="capitalize font-semibold">
             {{ paginator.meta.current_page }}
           </p>
         </Button>
@@ -189,7 +189,7 @@ defineExpose(all)
           class="bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-800 rounded-l-none"
         >
           <i class="bx bx-caret-right"></i>
-          <p class="uppercase font-semibold">
+          <p class="capitalize font-semibold">
             next
           </p>
         </Button>
